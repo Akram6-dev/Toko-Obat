@@ -36,14 +36,16 @@
             BTN_masuk = new Button();
             label2 = new Label();
             label1 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // LBL_LOGIN
             // 
             LBL_LOGIN.AutoSize = true;
             LBL_LOGIN.Font = new Font("Arial Black", 20F, FontStyle.Bold);
-            LBL_LOGIN.Location = new Point(176, 54);
+            LBL_LOGIN.Location = new Point(163, 71);
             LBL_LOGIN.Name = "LBL_LOGIN";
             LBL_LOGIN.Size = new Size(165, 56);
             LBL_LOGIN.TabIndex = 0;
@@ -54,7 +56,7 @@
             LB_penjelasan.AutoSize = true;
             LB_penjelasan.Font = new Font("Arial Black", 7F, FontStyle.Bold);
             LB_penjelasan.ImageAlign = ContentAlignment.TopCenter;
-            LB_penjelasan.Location = new Point(18, 110);
+            LB_penjelasan.Location = new Point(22, 127);
             LB_penjelasan.Name = "LB_penjelasan";
             LB_penjelasan.Size = new Size(453, 38);
             LB_penjelasan.TabIndex = 1;
@@ -63,6 +65,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
             panel1.Controls.Add(TB_password);
             panel1.Controls.Add(TB_username);
             panel1.Controls.Add(BTN_masuk);
@@ -119,6 +122,17 @@
             label1.TabIndex = 2;
             label1.Text = "Username";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.kantin;
+            pictureBox1.Location = new Point(201, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(91, 56);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 7;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -126,10 +140,11 @@
             ClientSize = new Size(991, 540);
             Controls.Add(panel1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Halaman Login";
             Load += Form1_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -143,5 +158,6 @@
         private Label label2;
         private TextBox TB_username;
         private TextBox TB_password;
+        private PictureBox pictureBox1;
     }
 }

@@ -16,5 +16,10 @@ namespace Toko_Obat
         {
             InitializeComponent();
         }
+
+        private void Kasir_Dashboard_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
