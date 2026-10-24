@@ -10,6 +10,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Owner_Profil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Owner_Transaksi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Owner_LogAktivitas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Owner_Produk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Owner_Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Kasir_Produk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Kasir_Profil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Kasir_Transaksi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Kasir_Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Admin_FormAkun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Admin_Akun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Admin_Profi;.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Admin_Produk.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
