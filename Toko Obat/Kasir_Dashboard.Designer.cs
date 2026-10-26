@@ -371,9 +371,9 @@
             label8.AutoSize = true;
             label8.Location = new Point(3, 4);
             label8.Name = "label8";
-            label8.Size = new Size(165, 25);
+            label8.Size = new Size(116, 25);
             label8.TabIndex = 2;
-            label8.Text = "Total Produk Terjual";
+            label8.Text = "Total Produk ";
             // 
             // panel8
             // 

@@ -18,6 +18,24 @@ namespace Toko_Obat
         {
             return new SqlConnection(connString);
         }
+
+        public static void CatatLog(string pesanAktivitas)
+        {
+            using (SqlConnection conn = GetConn())
+            {
+                conn.Open();
+                // Jika belum login, default pakai Id = 1 (Admin)
+                int idUser = UserSession.Id > 0 ? UserSession.Id : 1;
+
+                string query = "INSERT INTO LogAktivitas (IdUser, Aktivitas) VALUES (@idUser, @pesan)";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idUser", idUser);
+                    cmd.Parameters.AddWithValue("@pesan", pesanAktivitas);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 
     public static class UserSession

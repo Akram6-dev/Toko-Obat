@@ -279,6 +279,7 @@
             btnEditProfil.TabIndex = 12;
             btnEditProfil.Text = "✏️ Edit Profil";
             btnEditProfil.UseVisualStyleBackColor = false;
+            btnEditProfil.Click += btnEditProfil_Click;
             // 
             // txtPassword
             // 
@@ -286,6 +287,7 @@
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(290, 31);
             txtPassword.TabIndex = 11;
+            txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // txtUsername
             // 
@@ -293,6 +295,7 @@
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(285, 31);
             txtUsername.TabIndex = 10;
+            txtUsername.TextChanged += txtUsername_TextChanged;
             // 
             // label5
             // 
@@ -332,6 +335,7 @@
             lblId.TabIndex = 5;
             lblId.Text = "ID: 111";
             lblId.TextAlign = ContentAlignment.MiddleLeft;
+            lblId.Click += lblId_Click;
             // 
             // panel7
             // 
@@ -364,6 +368,7 @@
             lblNama.Size = new Size(62, 25);
             lblNama.TabIndex = 3;
             lblNama.Text = "Nama";
+            lblNama.Click += lblNama_Click;
             // 
             // btnEditFoto
             // 
@@ -376,6 +381,7 @@
             btnEditFoto.TabIndex = 2;
             btnEditFoto.Text = "Edit Foto ";
             btnEditFoto.UseVisualStyleBackColor = false;
+            btnEditFoto.Click += btnEditFoto_Click;
             // 
             // label3
             // 

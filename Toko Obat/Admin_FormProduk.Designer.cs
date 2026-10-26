@@ -59,6 +59,7 @@
             label1.Size = new Size(163, 32);
             label1.TabIndex = 0;
             label1.Text = "Form Produk";
+            label1.Click += label1_Click;
             // 
             // pictureBox1
             // 
@@ -279,9 +280,9 @@
         public TextBox txtHarga;
         public ComboBox cmbCategory;
         public DateTimePicker dtpKadaluarsa;
-        private RichTextBox rtbDeskripsi;
         private Label label6;
         private Label label7;
         public ComboBox cmbJenis;
+        public RichTextBox rtbDeskripsi;
     }
 }

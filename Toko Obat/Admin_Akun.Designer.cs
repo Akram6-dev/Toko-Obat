@@ -274,6 +274,7 @@
             btnDelete.TabIndex = 2;
             btnDelete.Text = "🗑️ Delete";
             btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnEdit
             // 
@@ -286,6 +287,7 @@
             btnEdit.TabIndex = 1;
             btnEdit.Text = " 🖊️ Edit";
             btnEdit.UseVisualStyleBackColor = false;
+            btnEdit.Click += btnEdit_Click;
             // 
             // btnTambah
             // 
@@ -299,6 +301,7 @@
             btnTambah.TabIndex = 0;
             btnTambah.Text = "+ Tambah Akun";
             btnTambah.UseVisualStyleBackColor = false;
+            btnTambah.Click += btnTambah_Click;
             // 
             // label3
             // 
@@ -351,6 +354,7 @@
             cmbCariRole.Name = "cmbCariRole";
             cmbCariRole.Size = new Size(207, 33);
             cmbCariRole.TabIndex = 1;
+            cmbCariRole.SelectedIndexChanged += cmbCariRole_SelectedIndexChanged;
             // 
             // txtCariNama
             // 
@@ -358,6 +362,7 @@
             txtCariNama.Name = "txtCariNama";
             txtCariNama.Size = new Size(217, 31);
             txtCariNama.TabIndex = 0;
+            txtCariNama.TextChanged += txtCariNama_TextChanged;
             // 
             // dgvDataProduk
             // 
@@ -368,6 +373,7 @@
             dgvDataProduk.RowHeadersWidth = 62;
             dgvDataProduk.Size = new Size(755, 374);
             dgvDataProduk.TabIndex = 4;
+            dgvDataProduk.CellContentClick += dgvDataProduk_CellContentClick;
             // 
             // panel8
             // 
@@ -399,6 +405,7 @@
             Controls.Add(panel1);
             Name = "Admin_Akun";
             Text = "Admin_Akun";
+            Load += Admin_Akun_Load;
             panel1.ResumeLayout(false);
             tlp_sidebar.ResumeLayout(false);
             panel3.ResumeLayout(false);

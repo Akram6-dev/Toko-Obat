@@ -59,6 +59,7 @@
             pictureBox1.Size = new Size(120, 120);
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // btnFoto
             // 
@@ -68,6 +69,7 @@
             btnFoto.TabIndex = 2;
             btnFoto.Text = "pilih foto";
             btnFoto.UseVisualStyleBackColor = true;
+            btnFoto.Click += btnFoto_Click;
             // 
             // Nama
             // 
@@ -107,6 +109,7 @@
             btnSimpan.TabIndex = 8;
             btnSimpan.Text = "Simpan";
             btnSimpan.UseVisualStyleBackColor = false;
+            btnSimpan.Click += btnSimpan_Click;
             // 
             // btnBatal
             // 
@@ -116,6 +119,7 @@
             btnBatal.TabIndex = 9;
             btnBatal.Text = "Batal";
             btnBatal.UseVisualStyleBackColor = true;
+            btnBatal.Click += btnBatal_Click;
             // 
             // txtNama
             // 
@@ -123,6 +127,7 @@
             txtNama.Name = "txtNama";
             txtNama.Size = new Size(387, 31);
             txtNama.TabIndex = 10;
+            txtNama.TextChanged += txtNama_TextChanged;
             // 
             // cmbRole
             // 
@@ -131,6 +136,7 @@
             cmbRole.Name = "cmbRole";
             cmbRole.Size = new Size(209, 33);
             cmbRole.TabIndex = 13;
+            cmbRole.SelectedIndexChanged += cmbRole_SelectedIndexChanged;
             // 
             // textPass
             // 
@@ -138,6 +144,7 @@
             textPass.Name = "textPass";
             textPass.Size = new Size(387, 31);
             textPass.TabIndex = 15;
+            textPass.TextChanged += textPass_TextChanged;
             // 
             // Admin_FormAkun
             // 

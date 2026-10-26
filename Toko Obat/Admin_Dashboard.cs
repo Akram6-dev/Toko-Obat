@@ -1,12 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Toko_Obat
@@ -18,23 +12,37 @@ namespace Toko_Obat
             InitializeComponent();
         }
 
+        private void Admin_Dashboard_Load(object sender, EventArgs e)
+        {
+            MuatHalaman();
+        }
+
         private void MuatHalaman()
         {
-            lblWelcome.Text += " " + UserSession.Username.ToUpper();
+            if (!string.IsNullOrEmpty(UserSession.Username))
+            {
+                lblWelcome.Text = "Selamat datang, " + UserSession.Username.ToUpper();
+            }
 
             using (SqlConnection conn = Databases.GetConn())
             {
                 try
                 {
                     conn.Open();
-                    string query = "SELECT TOP 10 * FROM LogAktivitas WHERE Id = @id";
-                    string queryTT = "SELECT COUNT(*) FROM Transaksi";
-                    string queryTA = "SELECT COUNT(*) FROM Users";
-                    string queryTP = "SELECT COUNT(*) FROM Produk";
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    // Ambil 10 log terakhir milik user yang login (pakai IdUser, urut dari terbaru)
+                    int idUser = UserSession.Id > 0 ? UserSession.Id : 1;
+                    string queryLog = @"SELECT TOP 10 
+                                            ROW_NUMBER() OVER (ORDER BY Waktu DESC) AS [No],
+                                            Aktivitas, 
+                                            Waktu AS [Tanggal] 
+                                        FROM LogAktivitas 
+                                        WHERE IdUser = @id 
+                                        ORDER BY Waktu DESC";
+
+                    using (SqlCommand cmd = new SqlCommand(queryLog, conn))
                     {
-                        cmd.Parameters.AddWithValue("@id", UserSession.Id);
+                        cmd.Parameters.AddWithValue("@id", idUser);
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
@@ -43,22 +51,15 @@ namespace Toko_Obat
                         }
                     }
 
-                    using(SqlCommand cmdTT = new SqlCommand(queryTT, conn))
-                    {
+                    // Hitung total kartu statistik
+                    using (SqlCommand cmdTT = new SqlCommand("SELECT COUNT(*) FROM Transaksi", conn))
                         lblTotalTransaksi.Text = cmdTT.ExecuteScalar().ToString();
-                    }
 
-                    using (SqlCommand cmdTA = new SqlCommand(queryTA, conn))
-                    {
+                    using (SqlCommand cmdTA = new SqlCommand("SELECT COUNT(*) FROM Users", conn))
                         lblTotalAkun.Text = cmdTA.ExecuteScalar().ToString();
-                    }
 
-                    using( SqlCommand cmdTP = new SqlCommand(queryTP, conn))
-                    {
+                    using (SqlCommand cmdTP = new SqlCommand("SELECT COUNT(*) FROM Produk", conn))
                         lblTotalProduk.Text = cmdTP.ExecuteScalar().ToString();
-                    }
-
-
                 }
                 catch (Exception ex)
                 {
@@ -66,44 +67,37 @@ namespace Toko_Obat
                 }
             }
 
-
+            dgv10AktivitasTerakhir.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv10AktivitasTerakhir.MultiSelect = false;
+            dgv10AktivitasTerakhir.ReadOnly = true;
+            dgv10AktivitasTerakhir.AllowUserToAddRows = false;
+            dgv10AktivitasTerakhir.RowHeadersVisible = false;
+            dgv10AktivitasTerakhir.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+
         private void btnProduk_Click(object sender, EventArgs e)
         {
-            Admin_Produk produk = new Admin_Produk();
-            produk.Show();
+            new Admin_Produk().Show();
             this.Close();
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            Admin_Dashboard dashboard = new Admin_Dashboard();
-            dashboard.Show();
-            this.Close();
+            MuatHalaman();
         }
 
         private void btnAkun_Click(object sender, EventArgs e)
         {
-            Admin_Akun akun = new Admin_Akun();
-            akun.Show();
+            new Admin_Akun().Show();
             this.Close();
         }
 
         private void btnProfil_Click(object sender, EventArgs e)
         {
-            Admin_Profil profil = new Admin_Profil();
-            profil.Show();
+            new Admin_Profil().Show();
             this.Close();
         }
 
-        private void Admin_Dashboard_Load(object sender, EventArgs e)
-        {
-            MuatHalaman();
-        }
-
-        private void lblWelcome_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void lblWelcome_Click(object sender, EventArgs e) { }
     }
 }
