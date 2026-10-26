@@ -35,6 +35,7 @@
             pictureBox1 = new PictureBox();
             label2 = new Label();
             panel4 = new Panel();
+            btnLog = new Button();
             btnProfil = new Button();
             btnDashboard = new Button();
             btnProduk = new Button();
@@ -63,7 +64,6 @@
             panel13 = new Panel();
             label5 = new Label();
             dgv10AktivitasTerkini = new DataGridView();
-            btnLog = new Button();
             panel1.SuspendLayout();
             tlp_sidebar.SuspendLayout();
             panel3.SuspendLayout();
@@ -168,6 +168,18 @@
             panel4.Size = new Size(240, 466);
             panel4.TabIndex = 1;
             // 
+            // btnLog
+            // 
+            btnLog.FlatAppearance.BorderSize = 0;
+            btnLog.FlatStyle = FlatStyle.Flat;
+            btnLog.Location = new Point(12, 132);
+            btnLog.Name = "btnLog";
+            btnLog.Size = new Size(211, 34);
+            btnLog.TabIndex = 12;
+            btnLog.Text = "Log Aktivitas";
+            btnLog.UseVisualStyleBackColor = true;
+            btnLog.Click += btnLog_Click;
+            // 
             // btnProfil
             // 
             btnProfil.FlatAppearance.BorderSize = 0;
@@ -190,6 +202,7 @@
             btnDashboard.TabIndex = 8;
             btnDashboard.Text = "Dashboard";
             btnDashboard.UseVisualStyleBackColor = true;
+            btnDashboard.Click += btnDashboard_Click;
             // 
             // btnProduk
             // 
@@ -201,6 +214,7 @@
             btnProduk.TabIndex = 10;
             btnProduk.Text = "Produk";
             btnProduk.UseVisualStyleBackColor = true;
+            btnProduk.Click += btnProduk_Click;
             // 
             // btnTransaksi
             // 
@@ -212,6 +226,7 @@
             btnTransaksi.TabIndex = 9;
             btnTransaksi.Text = "Transaksi";
             btnTransaksi.UseVisualStyleBackColor = true;
+            btnTransaksi.Click += btnTransaksi_Click;
             // 
             // panel5
             // 
@@ -341,6 +356,7 @@
             panel12.Name = "panel12";
             panel12.Size = new Size(196, 110);
             panel12.TabIndex = 1;
+            panel12.Paint += panel12_Paint;
             // 
             // lblTotalProduk
             // 
@@ -381,6 +397,7 @@
             panel11.Name = "panel11";
             panel11.Size = new Size(196, 110);
             panel11.TabIndex = 1;
+            panel11.Paint += panel11_Paint;
             // 
             // lblTotalAkun
             // 
@@ -421,6 +438,7 @@
             panel10.Name = "panel10";
             panel10.Size = new Size(196, 110);
             panel10.TabIndex = 0;
+            panel10.Paint += panel10_Paint;
             // 
             // lblTotalTransaksi
             // 
@@ -488,17 +506,7 @@
             dgv10AktivitasTerkini.RowHeadersWidth = 62;
             dgv10AktivitasTerkini.Size = new Size(750, 219);
             dgv10AktivitasTerkini.TabIndex = 1;
-            // 
-            // btnLog
-            // 
-            btnLog.FlatAppearance.BorderSize = 0;
-            btnLog.FlatStyle = FlatStyle.Flat;
-            btnLog.Location = new Point(12, 132);
-            btnLog.Name = "btnLog";
-            btnLog.Size = new Size(211, 34);
-            btnLog.TabIndex = 12;
-            btnLog.Text = "Log Aktivitas";
-            btnLog.UseVisualStyleBackColor = true;
+            dgv10AktivitasTerkini.CellContentClick += dgv10AktivitasTerkini_CellContentClick;
             // 
             // Owner_Dashboard
             // 

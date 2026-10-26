@@ -3,7 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Microsoft.Data.SqlClient;
+using MySqlConnector;
 
 namespace Toko_Obat
 {
@@ -75,8 +75,8 @@ namespace Toko_Obat
 
                 query += " ORDER BY Id DESC";
 
-                using (SqlConnection conn = Databases.GetConn())
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (MySqlConnection conn = Databases.GetConn())
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     if (!string.IsNullOrWhiteSpace(txtCariNama.Text))
                     {
@@ -88,7 +88,7 @@ namespace Toko_Obat
                         cmd.Parameters.AddWithValue("@kat", cmbCariCategory.Text);
                     }
 
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);
@@ -199,8 +199,8 @@ namespace Toko_Obat
                 {
                     string query = "DELETE FROM Produk WHERE Id = @id";
 
-                    using (SqlConnection conn = Databases.GetConn())
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (MySqlConnection conn = Databases.GetConn())
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", idHapus);
                         conn.Open();

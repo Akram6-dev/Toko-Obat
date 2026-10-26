@@ -1,4 +1,6 @@
-using Microsoft.Data.SqlClient;
+using MySqlConnector;
+using System;
+using System.Windows.Forms;
 
 namespace Toko_Obat
 {
@@ -8,15 +10,12 @@ namespace Toko_Obat
         {
             InitializeComponent();
 
-            // 1. Mencegah layar berkedip saat digambar
             this.DoubleBuffered = true;
-
-            // 2. Otomatis gambar ulang bulatan setiap kali jendela ditarik/di-maximize
             outerGrid.Resize += (s, ev) => outerGrid.Invalidate();
         }
+
         private void label5_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -24,23 +23,27 @@ namespace Toko_Obat
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username) ||
+                string.IsNullOrEmpty(password))
             {
-                lblError.Text = "Harap Isi Username atau Password";
+                lblError.Text = "Harap isi username dan password.";
                 return;
             }
 
             try
             {
-                using (SqlConnection conn = Databases.GetConn())
+                using (MySqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
-                    string query = "SELECT Id, Nama, Role FROM Users WHERE Nama = @nama AND Password = @pass";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+
+                    string query = "SELECT Id, Nama, Role FROM Users WHERE Nama = @nama AND Password = @pass LIMIT 1";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@nama", username);
                         cmd.Parameters.AddWithValue("@pass", password);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
@@ -48,43 +51,58 @@ namespace Toko_Obat
                                 string namaAkun = reader["Nama"].ToString();
                                 string roleAkun = reader["Role"].ToString();
 
-                                UserSession.SetUser(idAkun, namaAkun, roleAkun);
+                                UserSession.SetUser(
+                                    idAkun,
+                                    namaAkun,
+                                    roleAkun
+                                );
+
+                                Form dashboard = null;
 
                                 if (roleAkun == "Admin")
                                 {
-                                    Admin_Dashboard Admin = new Admin_Dashboard();
-                                    Admin.Show();
-                                    this.Hide();
+                                    dashboard = new Admin_Dashboard();
                                 }
                                 else if (roleAkun == "Kasir")
                                 {
-                                    Kasir_Dashboard Kasir = new Kasir_Dashboard();
-                                    Kasir.Show();
+                                    dashboard = new Kasir_Dashboard();
+                                }
+                                else if (roleAkun == "Owner")
+                                {
+                                    dashboard = new Owner_Dashboard();
+                                }
+
+                                if (dashboard != null)
+                                {
+                                    dashboard.Show();
                                     this.Hide();
                                 }
                                 else
                                 {
-                                    lblError.Text = "Akun tidak terdaftar hubungi Admin";
+                                    lblError.Text = "Role tidak dikenali. Hubungi Admin.";
                                 }
-
                             }
-
+                            else
+                            {
+                                lblError.Text = "Username atau password salah.";
+                            }
                         }
                     }
-
                 }
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
+                MessageBox.Show(
+                    ex.Message,
+                    "Database Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
-
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-
         }
     }
 }
-

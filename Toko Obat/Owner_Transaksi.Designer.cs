@@ -46,17 +46,17 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             label3 = new Label();
             panel7 = new Panel();
+            label6 = new Label();
+            panel6 = new Panel();
+            dtpFilterAkhir = new DateTimePicker();
+            dtpFilterAwal = new DateTimePicker();
+            label5 = new Label();
+            txtCariProduk = new TextBox();
             label4 = new Label();
             txtCariPelanggan = new TextBox();
             dgvDataProduk = new DataGridView();
             panel8 = new Panel();
             label7 = new Label();
-            txtCariProduk = new TextBox();
-            label5 = new Label();
-            dtpFilterAwal = new DateTimePicker();
-            dtpFilterAkhir = new DateTimePicker();
-            panel6 = new Panel();
-            label6 = new Label();
             sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
             panel1.SuspendLayout();
             tlp_sidebar.SuspendLayout();
@@ -163,6 +163,7 @@
             btnLog.TabIndex = 12;
             btnLog.Text = "Log Aktivitas";
             btnLog.UseVisualStyleBackColor = true;
+            btnLog.Click += btnLog_Click;
             // 
             // btnProfil
             // 
@@ -174,6 +175,7 @@
             btnProfil.TabIndex = 11;
             btnProfil.Text = "Profil";
             btnProfil.UseVisualStyleBackColor = true;
+            btnProfil.Click += btnProfil_Click;
             // 
             // btnDashboard
             // 
@@ -185,6 +187,7 @@
             btnDashboard.TabIndex = 8;
             btnDashboard.Text = "Dashboard";
             btnDashboard.UseVisualStyleBackColor = true;
+            btnDashboard.Click += btnDashboard_Click;
             // 
             // btnProduk
             // 
@@ -196,6 +199,7 @@
             btnProduk.TabIndex = 10;
             btnProduk.Text = "Produk";
             btnProduk.UseVisualStyleBackColor = true;
+            btnProduk.Click += btnProduk_Click;
             // 
             // btnTransaksi
             // 
@@ -207,6 +211,7 @@
             btnTransaksi.TabIndex = 9;
             btnTransaksi.Text = "Transaksi";
             btnTransaksi.UseVisualStyleBackColor = true;
+            btnTransaksi.Click += btnTransaksi_Click;
             // 
             // panel5
             // 
@@ -289,6 +294,56 @@
             panel7.Size = new Size(982, 95);
             panel7.TabIndex = 2;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(523, 22);
+            label6.Name = "label6";
+            label6.Size = new Size(129, 25);
+            label6.TabIndex = 9;
+            label6.Text = "Rentang waktu";
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.White;
+            panel6.Location = new Point(740, 64);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(18, 8);
+            panel6.TabIndex = 8;
+            // 
+            // dtpFilterAkhir
+            // 
+            dtpFilterAkhir.Location = new Point(768, 51);
+            dtpFilterAkhir.Name = "dtpFilterAkhir";
+            dtpFilterAkhir.Size = new Size(205, 31);
+            dtpFilterAkhir.TabIndex = 7;
+            dtpFilterAkhir.ValueChanged += dtpFilterAkhir_ValueChanged;
+            // 
+            // dtpFilterAwal
+            // 
+            dtpFilterAwal.Location = new Point(523, 51);
+            dtpFilterAwal.Name = "dtpFilterAwal";
+            dtpFilterAwal.Size = new Size(205, 31);
+            dtpFilterAwal.TabIndex = 6;
+            dtpFilterAwal.ValueChanged += dtpFilterAwal_ValueChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(269, 22);
+            label5.Name = "label5";
+            label5.Size = new Size(104, 25);
+            label5.TabIndex = 5;
+            label5.Text = "Cari Produk";
+            // 
+            // txtCariProduk
+            // 
+            txtCariProduk.Location = new Point(269, 50);
+            txtCariProduk.Name = "txtCariProduk";
+            txtCariProduk.Size = new Size(217, 31);
+            txtCariProduk.TabIndex = 4;
+            txtCariProduk.TextChanged += txtCariProduk_TextChanged;
+            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -304,6 +359,7 @@
             txtCariPelanggan.Name = "txtCariPelanggan";
             txtCariPelanggan.Size = new Size(217, 31);
             txtCariPelanggan.TabIndex = 0;
+            txtCariPelanggan.TextChanged += txtCariPelanggan_TextChanged;
             // 
             // dgvDataProduk
             // 
@@ -314,6 +370,7 @@
             dgvDataProduk.RowHeadersWidth = 62;
             dgvDataProduk.Size = new Size(982, 437);
             dgvDataProduk.TabIndex = 4;
+            dgvDataProduk.CellContentClick += dgvDataProduk_CellContentClick;
             // 
             // panel8
             // 
@@ -335,53 +392,6 @@
             label7.TabIndex = 4;
             label7.Text = "Tabel Data Transaksi";
             label7.TextAlign = ContentAlignment.BottomLeft;
-            // 
-            // txtCariProduk
-            // 
-            txtCariProduk.Location = new Point(269, 50);
-            txtCariProduk.Name = "txtCariProduk";
-            txtCariProduk.Size = new Size(217, 31);
-            txtCariProduk.TabIndex = 4;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(269, 22);
-            label5.Name = "label5";
-            label5.Size = new Size(104, 25);
-            label5.TabIndex = 5;
-            label5.Text = "Cari Produk";
-            // 
-            // dtpFilterAwal
-            // 
-            dtpFilterAwal.Location = new Point(523, 51);
-            dtpFilterAwal.Name = "dtpFilterAwal";
-            dtpFilterAwal.Size = new Size(205, 31);
-            dtpFilterAwal.TabIndex = 6;
-            // 
-            // dtpFilterAkhir
-            // 
-            dtpFilterAkhir.Location = new Point(768, 51);
-            dtpFilterAkhir.Name = "dtpFilterAkhir";
-            dtpFilterAkhir.Size = new Size(205, 31);
-            dtpFilterAkhir.TabIndex = 7;
-            // 
-            // panel6
-            // 
-            panel6.BackColor = Color.White;
-            panel6.Location = new Point(740, 64);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(18, 8);
-            panel6.TabIndex = 8;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(523, 22);
-            label6.Name = "label6";
-            label6.Size = new Size(129, 25);
-            label6.TabIndex = 9;
-            label6.Text = "Rentang waktu";
             // 
             // sqlCommand1
             // 

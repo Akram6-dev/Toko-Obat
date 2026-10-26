@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using Microsoft.Data.SqlClient;
 using System.Globalization;
 using System.Security.Cryptography.Pkcs;
+using MySqlConnector;
 
 namespace Toko_Obat
 {
     public static class Databases
     {
-        private static readonly string connString = "Data Source=.\\SQLEXPRESS;Initial Catalog=TokoObat;Integrated Security=True;Trust Server Certificate=True";
+        private static readonly string connString = "Server=localhost;Port=3306;Database=tokoobat;User ID=root;Password=;";
 
-        public static SqlConnection GetConn()
+        public static MySqlConnection GetConn()
         {
-            return new SqlConnection(connString);
+            return new MySqlConnection(connString);
         }
     }
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +20,7 @@ namespace Toko_Obat
 
         private void MuatHalaman()
         {
-            using(SqlConnection conn = Databases.GetConn())
+            using(MySqlConnection conn = Databases.GetConn())
             {
                 conn.Open();
             }

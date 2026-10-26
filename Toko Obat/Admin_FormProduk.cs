@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using MySqlConnector;
 using System;
 using System.Data;
 using System.Drawing;
@@ -135,7 +135,7 @@ namespace Toko_Obat
 
             try
             {
-                using (SqlConnection conn = Databases.GetConn())
+                using (MySqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -145,7 +145,7 @@ namespace Toko_Obat
                         string query = @"INSERT INTO Produk (IdAdmin, Nama, Category, TanggalKadaluarsa, Stok, Harga, FotoProduk, Deskripsi) 
                                          VALUES (@idAdmin, @nama, @kat, @exp, @stok, @harga, @foto, @desc)";
 
-                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             // Jika UserSession.Id kosong, default ke 1
                             cmd.Parameters.AddWithValue("@idAdmin", UserSession.Id > 0 ? UserSession.Id : 1);
@@ -170,7 +170,7 @@ namespace Toko_Obat
                                              Stok = @stok, Harga = @harga, FotoProduk = @foto 
                                          WHERE Id = @id";
 
-                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             cmd.Parameters.AddWithValue("@id", IdProdukEdit);
                             cmd.Parameters.AddWithValue("@nama", txtNama.Text.Trim());
