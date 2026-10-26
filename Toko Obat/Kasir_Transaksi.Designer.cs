@@ -326,6 +326,7 @@
             txtPelanggan.Name = "txtPelanggan";
             txtPelanggan.Size = new Size(207, 31);
             txtPelanggan.TabIndex = 3;
+            txtPelanggan.TextChanged += txtPelanggan_TextChanged;
             // 
             // label4
             // 

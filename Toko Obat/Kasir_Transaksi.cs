@@ -71,5 +71,10 @@ namespace Toko_Obat
             dashboard.Show();
             this.Close();
         }
+
+        private void txtPelanggan_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

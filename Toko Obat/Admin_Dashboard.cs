@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using MySqlConnector;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -24,7 +24,7 @@ namespace Toko_Obat
                 lblWelcome.Text = "Selamat datang, " + UserSession.Username.ToUpper();
             }
 
-            using (SqlConnection conn = Databases.GetConn())
+            using (MySqlConnection conn = Databases.GetConn())
             {
                 try
                 {
@@ -63,9 +63,15 @@ namespace Toko_Obat
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        "Error: " + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
             }
+        }
 
             dgv10AktivitasTerakhir.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv10AktivitasTerakhir.MultiSelect = false;

@@ -35,6 +35,7 @@
             pictureBox1 = new PictureBox();
             label2 = new Label();
             panel4 = new Panel();
+            button1 = new Button();
             btnLogAktivitas = new Button();
             btnDashboard = new Button();
             btnProduk = new Button();
@@ -55,7 +56,6 @@
             lblNama = new Label();
             label3 = new Label();
             fotoProfil = new PictureBox();
-            button1 = new Button();
             panel1.SuspendLayout();
             tlp_sidebar.SuspendLayout();
             panel3.SuspendLayout();
@@ -152,6 +152,18 @@
             panel4.Size = new Size(240, 464);
             panel4.TabIndex = 1;
             // 
+            // button1
+            // 
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(12, 172);
+            button1.Name = "button1";
+            button1.Size = new Size(211, 34);
+            button1.TabIndex = 12;
+            button1.Text = "Profil";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // btnLogAktivitas
             // 
             btnLogAktivitas.FlatAppearance.BorderSize = 0;
@@ -162,7 +174,7 @@
             btnLogAktivitas.TabIndex = 11;
             btnLogAktivitas.Text = "LogAktivitas";
             btnLogAktivitas.UseVisualStyleBackColor = true;
-            //btnLogAktivitas.Click += btnProfil_Click;
+            btnLogAktivitas.Click += btnLogAktivitas_Click;
             // 
             // btnDashboard
             // 
@@ -174,7 +186,7 @@
             btnDashboard.TabIndex = 8;
             btnDashboard.Text = "Dashboard";
             btnDashboard.UseVisualStyleBackColor = true;
-            //btnDashboard.Click += btnDashboard_Click;
+            btnDashboard.Click += btnDashboard_Click;
             // 
             // btnProduk
             // 
@@ -186,7 +198,7 @@
             btnProduk.TabIndex = 10;
             btnProduk.Text = "Produk";
             btnProduk.UseVisualStyleBackColor = true;
-            //btnProduk.Click += btnProduk_Click;
+            btnProduk.Click += btnProduk_Click;
             // 
             // btnTransaksi
             // 
@@ -198,7 +210,7 @@
             btnTransaksi.TabIndex = 9;
             btnTransaksi.Text = "Transaksi";
             btnTransaksi.UseVisualStyleBackColor = true;
-            //btnTransaksi.Click += btnTransaksi_Click;
+            btnTransaksi.Click += btnTransaksi_Click;
             // 
             // panel5
             // 
@@ -275,6 +287,7 @@
             lblPassword.TabIndex = 11;
             lblPassword.Text = "label7";
             lblPassword.TextAlign = ContentAlignment.MiddleLeft;
+            lblPassword.Click += lblPassword_Click;
             // 
             // lblUsername
             // 
@@ -285,6 +298,7 @@
             lblUsername.TabIndex = 10;
             lblUsername.Text = "label6";
             lblUsername.TextAlign = ContentAlignment.MiddleLeft;
+            lblUsername.Click += lblUsername_Click;
             // 
             // label5
             // 
@@ -373,17 +387,7 @@
             fotoProfil.Size = new Size(100, 100);
             fotoProfil.TabIndex = 0;
             fotoProfil.TabStop = false;
-            // 
-            // button1
-            // 
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(12, 172);
-            button1.Name = "button1";
-            button1.Size = new Size(211, 34);
-            button1.TabIndex = 12;
-            button1.Text = "Profil";
-            button1.UseVisualStyleBackColor = true;
+            fotoProfil.Click += fotoProfil_Click;
             // 
             // Owner_Profil
             // 

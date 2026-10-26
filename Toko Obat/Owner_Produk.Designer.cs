@@ -160,6 +160,7 @@
             btnLog.TabIndex = 12;
             btnLog.Text = "Log Aktivitas";
             btnLog.UseVisualStyleBackColor = true;
+            btnLog.Click += btnLog_Click;
             // 
             // btnProfil
             // 
@@ -171,6 +172,7 @@
             btnProfil.TabIndex = 11;
             btnProfil.Text = "Profil";
             btnProfil.UseVisualStyleBackColor = true;
+            btnProfil.Click += btnProfil_Click;
             // 
             // btnDashboard
             // 
@@ -182,6 +184,7 @@
             btnDashboard.TabIndex = 8;
             btnDashboard.Text = "Dashboard";
             btnDashboard.UseVisualStyleBackColor = true;
+            btnDashboard.Click += btnDashboard_Click;
             // 
             // btnProduk
             // 
@@ -193,6 +196,7 @@
             btnProduk.TabIndex = 10;
             btnProduk.Text = "Produk";
             btnProduk.UseVisualStyleBackColor = true;
+            btnProduk.Click += btnProduk_Click;
             // 
             // btnTransaksi
             // 
@@ -204,6 +208,7 @@
             btnTransaksi.TabIndex = 9;
             btnTransaksi.Text = "Transaksi";
             btnTransaksi.UseVisualStyleBackColor = true;
+            btnTransaksi.Click += btnTransaksi_Click;
             // 
             // panel5
             // 
@@ -318,6 +323,7 @@
             cmbCariStok.Name = "cmbCariStok";
             cmbCariStok.Size = new Size(215, 33);
             cmbCariStok.TabIndex = 2;
+            cmbCariStok.SelectedIndexChanged += cmbCariStok_SelectedIndexChanged;
             // 
             // cmbCariCategory
             // 
@@ -326,6 +332,7 @@
             cmbCariCategory.Name = "cmbCariCategory";
             cmbCariCategory.Size = new Size(207, 33);
             cmbCariCategory.TabIndex = 1;
+            cmbCariCategory.SelectedIndexChanged += cmbCariCategory_SelectedIndexChanged;
             // 
             // txtCariNama
             // 
@@ -333,6 +340,7 @@
             txtCariNama.Name = "txtCariNama";
             txtCariNama.Size = new Size(217, 31);
             txtCariNama.TabIndex = 0;
+            txtCariNama.TextChanged += txtCariNama_TextChanged;
             // 
             // dgvDataProduk
             // 
@@ -343,6 +351,7 @@
             dgvDataProduk.RowHeadersWidth = 62;
             dgvDataProduk.Size = new Size(755, 437);
             dgvDataProduk.TabIndex = 4;
+            dgvDataProduk.CellContentClick += dgvDataProduk_CellContentClick;
             // 
             // panel8
             // 
