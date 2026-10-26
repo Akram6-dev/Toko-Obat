@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Globalization;
 using System.Security.Cryptography.Pkcs;
-using MySqlConnector;
+using Microsoft.Data.SqlClient;
 
 namespace Toko_Obat
 {
@@ -14,9 +14,9 @@ namespace Toko_Obat
     {
         private static readonly string connString = "Server=localhost;Port=3306;Database=tokoobat;User ID=root;Password=;";
 
-        public static MySqlConnection GetConn()
+        public static SqlConnection GetConn()
         {
-            return new MySqlConnection(connString);
+            return new SqlConnection(connString);
         }
 
         public static void CatatLog(string pesanAktivitas)

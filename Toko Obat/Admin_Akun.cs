@@ -17,7 +17,7 @@ namespace Toko_Obat
         private void Admin_Akun_Load(object sender, EventArgs e)
         {
             cmbCariRole.Items.Clear();
-            cmbCariRole.Items.AddRange(new object[] { "Semua Role", "Admin", "Kasir", "Apoteker" });
+            cmbCariRole.Items.AddRange(new object[] { "Semua Role", "Admin", "Kasir", "Owner"});
             cmbCariRole.SelectedIndex = 0;
 
             dgvDataProduk.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

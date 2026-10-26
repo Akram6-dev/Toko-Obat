@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using MySqlConnector;
+using Microsoft.Data.SqlClient; 
 
 namespace Toko_Obat
 {
@@ -24,7 +24,7 @@ namespace Toko_Obat
         {
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -34,8 +34,8 @@ namespace Toko_Obat
                         WHERE Id = 3 AND Role = 'Owner'
                         LIMIT 1";
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (!reader.Read())
                         {

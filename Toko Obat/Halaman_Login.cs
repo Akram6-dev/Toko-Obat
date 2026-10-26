@@ -1,4 +1,4 @@
-using MySqlConnector;
+using Microsoft.Data.SqlClient; 
 using System;
 using System.Windows.Forms;
 
@@ -32,18 +32,18 @@ namespace Toko_Obat
 
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
                     string query = "SELECT Id, Nama, Role FROM Users WHERE Nama = @nama AND Password = @pass LIMIT 1";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@nama", username);
                         cmd.Parameters.AddWithValue("@pass", password);
 
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {

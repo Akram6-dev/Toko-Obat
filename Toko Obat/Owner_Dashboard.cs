@@ -2,7 +2,7 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
-using MySqlConnector;
+using Microsoft.Data.SqlClient; 
 
 namespace Toko_Obat
 {
@@ -24,7 +24,7 @@ namespace Toko_Obat
         {
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -34,8 +34,8 @@ namespace Toko_Obat
                             (SELECT COUNT(*) FROM Users) AS TotalAkun,
                             (SELECT COUNT(*) FROM Produk) AS TotalProduk";
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
@@ -62,7 +62,7 @@ namespace Toko_Obat
         {
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -77,8 +77,8 @@ namespace Toko_Obat
                         ORDER BY L.Waktu DESC
                         LIMIT 10";
 
-                    using (MySqlDataAdapter adapter =
-                           new MySqlDataAdapter(sql, conn))
+                    using (SqlDataAdapter adapter =
+                           new SqlDataAdapter(sql, conn))
                     {
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);

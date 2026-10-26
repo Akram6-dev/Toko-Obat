@@ -3,7 +3,7 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using MySqlConnector;
+using Microsoft.Data.SqlClient; 
 
 namespace Toko_Obat
 {
@@ -56,7 +56,7 @@ namespace Toko_Obat
 
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -118,7 +118,7 @@ namespace Toko_Obat
                         ORDER BY t.Tanggal_Transaksi DESC;
                     ";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue(
                             "@tanggalAwal",
@@ -153,8 +153,8 @@ namespace Toko_Obat
 
                         DataTable dt = new DataTable();
 
-                        using (MySqlDataAdapter adapter =
-                            new MySqlDataAdapter(cmd))
+                        using (SqlDataAdapter adapter =
+                            new SqlDataAdapter(cmd))
                         {
                             adapter.Fill(dt);
                         }

@@ -3,7 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using MySqlConnector;
+using Microsoft.Data.SqlClient;
 
 namespace Toko_Obat
 {
@@ -63,8 +63,8 @@ namespace Toko_Obat
 
                 query += " ORDER BY Id DESC";
 
-                using (MySqlConnection conn = Databases.GetConn())
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (SqlConnection conn = Databases.GetConn())
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     if (!string.IsNullOrWhiteSpace(txtCariNama.Text))
                         cmd.Parameters.AddWithValue("@nama", "%" + txtCariNama.Text.Trim() + "%");
@@ -72,7 +72,7 @@ namespace Toko_Obat
                     if (cmbCariCategory.SelectedIndex > 0)
                         cmd.Parameters.AddWithValue("@kat", cmbCariCategory.Text);
 
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
                         DataTable dt = new DataTable();
                         da.Fill(dt);

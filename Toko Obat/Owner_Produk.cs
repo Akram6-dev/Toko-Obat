@@ -2,7 +2,7 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
-using MySqlConnector;
+using Microsoft.Data.SqlClient; 
 
 namespace Toko_Obat
 {
@@ -30,7 +30,7 @@ namespace Toko_Obat
         {
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -39,8 +39,8 @@ namespace Toko_Obat
 
                     string sql = "SELECT DISTINCT Kategori FROM Produk ORDER BY Kategori";
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -62,7 +62,7 @@ namespace Toko_Obat
         {
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -81,7 +81,7 @@ namespace Toko_Obat
                             )
                         ORDER BY Id DESC";
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         string nama = txtCariNama.Text.Trim();
 
@@ -98,7 +98,7 @@ namespace Toko_Obat
                         cmd.Parameters.AddWithValue("@kategori", kategori);
                         cmd.Parameters.AddWithValue("@stok", stok);
 
-                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);

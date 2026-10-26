@@ -2,7 +2,7 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
-using MySqlConnector;
+using Microsoft.Data.SqlClient; 
 
 namespace Toko_Obat
 {
@@ -36,7 +36,7 @@ namespace Toko_Obat
 
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -45,8 +45,8 @@ namespace Toko_Obat
                         FROM LogAktivitas
                         ORDER BY Aktivitas";
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -68,7 +68,7 @@ namespace Toko_Obat
         {
             try
             {
-                using (MySqlConnection conn = Databases.GetConn())
+                using (SqlConnection conn = Databases.GetConn())
                 {
                     conn.Open();
 
@@ -91,7 +91,7 @@ namespace Toko_Obat
                             AND L.Waktu < @akhir
                         ORDER BY L.Waktu DESC";
 
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         string cari = txtCariNama.Text.Trim();
                         string aktivitas =
@@ -108,8 +108,8 @@ namespace Toko_Obat
                         cmd.Parameters.AddWithValue(
                             "@akhir", dtpFilterAkhir.Value.Date.AddDays(1));
 
-                        using (MySqlDataAdapter adapter =
-                               new MySqlDataAdapter(cmd))
+                        using (SqlDataAdapter adapter =
+                               new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
