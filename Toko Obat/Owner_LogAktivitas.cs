@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -11,6 +11,7 @@ namespace Toko_Obat
         public Owner_LogAktivitas()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
 
             dgvDataProduk.AutoGenerateColumns = true;
             dgvDataProduk.ReadOnly = true;
@@ -31,37 +32,15 @@ namespace Toko_Obat
         private void LoadJenisAktivitas()
         {
             cmbCariCategory.Items.Clear();
-            cmbCariCategory.Items.Add("Semua Aktivitas");
+            cmbCariCategory.Items.AddRange(new object[] {
+                "Semua Aktivitas",
+                "Login & Logout",
+                "Transaksi",
+                "Kelola Produk",
+                "Kelola Akun",
+                "Pelanggan"
+            });
             cmbCariCategory.SelectedIndex = 0;
-
-            try
-            {
-                using (SqlConnection conn = Databases.GetConn())
-                {
-                    conn.Open();
-
-                    string sql = @"
-                        SELECT DISTINCT Aktivitas
-                        FROM LogAktivitas
-                        ORDER BY Aktivitas";
-
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            if (!reader.IsDBNull(0))
-                                cmbCariCategory.Items.Add(
-                                    reader.GetString(0));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Gagal memuat jenis aktivitas: " + ex.Message);
-            }
         }
 
         private void LoadDataLog()
@@ -74,19 +53,25 @@ namespace Toko_Obat
 
                     string sql = @"
                         SELECT
-                            L.Id,
-                            L.IdUser,
-                            U.Nama AS NamaPegawai,
-                            L.Aktivitas,
-                            L.Waktu
+                            L.Id AS [ID Log],
+                            COALESCE(U.Nama, 'Sistem') AS [Nama Pegawai],
+                            L.Aktivitas AS [Aktivitas],
+                            L.Waktu AS [Waktu]
                         FROM LogAktivitas L
                         LEFT JOIN Users U ON U.Id = L.IdUser
                         WHERE
                             (@cari = ''
-                            OR CAST(L.IdUser AS CHAR) LIKE @keyword
-                            OR U.Nama LIKE @keyword)
-                            AND (@aktivitas = 'Semua Aktivitas'
-                            OR L.Aktivitas = @aktivitas)
+                            OR CAST(L.IdUser AS VARCHAR(20)) LIKE @keyword
+                            OR U.Nama LIKE @keyword
+                            OR L.Aktivitas LIKE @keyword)
+                            AND (
+                                @kategori = 'Semua Aktivitas'
+                                OR (@kategori = 'Login & Logout' AND (L.Aktivitas LIKE '%Login%' OR L.Aktivitas LIKE '%Logout%'))
+                                OR (@kategori = 'Transaksi' AND L.Aktivitas LIKE '%Transaksi%')
+                                OR (@kategori = 'Kelola Produk' AND (L.Aktivitas LIKE '%obat%' OR L.Aktivitas LIKE '%Produk%'))
+                                OR (@kategori = 'Kelola Akun' AND (L.Aktivitas LIKE '%akun%' OR L.Aktivitas LIKE '%profil%'))
+                                OR (@kategori = 'Pelanggan' AND L.Aktivitas LIKE '%pelanggan%')
+                            )
                             AND L.Waktu >= @awal
                             AND L.Waktu < @akhir
                         ORDER BY L.Waktu DESC";
@@ -94,7 +79,7 @@ namespace Toko_Obat
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         string cari = txtCariNama.Text.Trim();
-                        string aktivitas =
+                        string kategori =
                             cmbCariCategory.SelectedItem?.ToString()
                             ?? "Semua Aktivitas";
 
@@ -102,7 +87,7 @@ namespace Toko_Obat
                         cmd.Parameters.AddWithValue(
                             "@keyword", "%" + cari + "%");
                         cmd.Parameters.AddWithValue(
-                            "@aktivitas", aktivitas);
+                            "@kategori", kategori);
                         cmd.Parameters.AddWithValue(
                             "@awal", dtpFilterAwal.Value.Date);
                         cmd.Parameters.AddWithValue(
@@ -115,6 +100,9 @@ namespace Toko_Obat
                             adapter.Fill(dt);
                             dgvDataProduk.DataSource = dt;
                         }
+
+                        if (dgvDataProduk.Columns["Waktu"] != null)
+                            dgvDataProduk.Columns["Waktu"].DefaultCellStyle.Format = "dd MMM yyyy HH:mm:ss";
                     }
                 }
             }
@@ -128,19 +116,19 @@ namespace Toko_Obat
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             new Owner_Dashboard().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnTransaksi_Click(object sender, EventArgs e)
         {
             new Owner_Transaksi().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnProduk_Click(object sender, EventArgs e)
         {
             new Owner_Produk().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnLog_Click(object sender, EventArgs e)
@@ -151,7 +139,12 @@ namespace Toko_Obat
         private void btnProfil_Click(object sender, EventArgs e)
         {
             new Owner_Profil().Show();
-            this.Hide();
+            this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
 
         private void txtCariNama_TextChanged(

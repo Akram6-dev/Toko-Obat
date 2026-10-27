@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -10,6 +10,7 @@ namespace Toko_Obat
         public Admin_Dashboard()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void Admin_Dashboard_Load(object sender, EventArgs e)
@@ -96,6 +97,11 @@ namespace Toko_Obat
         {
             new Admin_Profil().Show();
             this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
 
         private void lblWelcome_Click(object sender, EventArgs e) { }

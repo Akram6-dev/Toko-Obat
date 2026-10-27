@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -11,6 +11,7 @@ namespace Toko_Obat
         public Owner_Dashboard()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             this.Load += Owner_Dashboard_Load;
         }
 
@@ -67,15 +68,14 @@ namespace Toko_Obat
                     conn.Open();
 
                     string sql = @"
-                        SELECT
-                            L.Id,
-                            U.Nama AS Pengguna,
-                            L.Aktivitas,
-                            L.Waktu
+                        SELECT TOP 10
+                            L.Id AS [ID Log],
+                            COALESCE(U.Nama, 'Sistem') AS [Pengguna],
+                            L.Aktivitas AS [Aktivitas],
+                            L.Waktu AS [Waktu]
                         FROM LogAktivitas L
-                        INNER JOIN Users U ON L.IdUser = U.Id
-                        ORDER BY L.Waktu DESC
-                        LIMIT 10";
+                        LEFT JOIN Users U ON L.IdUser = U.Id
+                        ORDER BY L.Waktu DESC";
 
                     using (SqlDataAdapter adapter =
                            new SqlDataAdapter(sql, conn))
@@ -88,6 +88,11 @@ namespace Toko_Obat
                         dgv10AktivitasTerkini.AutoSizeColumnsMode =
                             DataGridViewAutoSizeColumnsMode.Fill;
                         dgv10AktivitasTerkini.AllowUserToAddRows = false;
+                        dgv10AktivitasTerkini.RowHeadersVisible = false;
+                        dgv10AktivitasTerkini.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                        if (dgv10AktivitasTerkini.Columns["Waktu"] != null)
+                            dgv10AktivitasTerkini.Columns["Waktu"].DefaultCellStyle.Format = "dd MMM yyyy HH:mm:ss";
                     }
                 }
             }
@@ -100,7 +105,7 @@ namespace Toko_Obat
         private void btnProfil_Click(object sender, EventArgs e)
         {
             new Owner_Profil().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
@@ -112,19 +117,24 @@ namespace Toko_Obat
         private void btnTransaksi_Click(object sender, EventArgs e)
         {
             new Owner_Transaksi().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnProduk_Click(object sender, EventArgs e)
         {
             new Owner_Produk().Show();
-            this.Hide();
+            this.Close();
         }
 
         private void btnLog_Click(object sender, EventArgs e)
         {
             new Owner_LogAktivitas().Show();
-            this.Hide();
+            this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
 
         private void panel10_Paint(object sender, PaintEventArgs e) { }

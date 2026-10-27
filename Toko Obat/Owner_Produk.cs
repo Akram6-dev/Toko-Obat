@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -11,6 +11,7 @@ namespace Toko_Obat
         public Owner_Produk()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
 
             dgvDataProduk.ReadOnly = true;
             dgvDataProduk.AllowUserToAddRows = false;
@@ -22,6 +23,17 @@ namespace Toko_Obat
 
         private void Owner_Produk_Load(object sender, EventArgs e)
         {
+            if (cmbCariStok.Items.Count == 0)
+            {
+                cmbCariStok.Items.AddRange(new object[] {
+                    "Semua Stok",
+                    "Stok Tersedia",
+                    "Stok Menipis",
+                    "Stok Habis"
+                });
+                cmbCariStok.SelectedIndex = 0;
+            }
+
             LoadKategori();
             LoadDataProduk();
         }
@@ -37,7 +49,7 @@ namespace Toko_Obat
                     cmbCariCategory.Items.Clear();
                     cmbCariCategory.Items.Add("Semua Kategori");
 
-                    string sql = "SELECT DISTINCT Kategori FROM Produk ORDER BY Kategori";
+                    string sql = "SELECT DISTINCT Category FROM Produk WHERE Category IS NOT NULL AND Category <> '' ORDER BY Category";
 
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -45,7 +57,7 @@ namespace Toko_Obat
                         while (reader.Read())
                         {
                             if (!reader.IsDBNull(0))
-                                cmbCariCategory.Items.Add(reader["Kategori"].ToString());
+                                cmbCariCategory.Items.Add(reader["Category"].ToString());
                         }
                     }
 
@@ -67,15 +79,15 @@ namespace Toko_Obat
                     conn.Open();
 
                     string sql = @"
-                        SELECT *
+                        SELECT Id, FotoProduk, Nama, Category AS Kategori, TanggalKadaluarsa, Stok, Jenis, Harga, Deskripsi
                         FROM Produk
                         WHERE
-                            (@nama = '' OR NamaProduk LIKE @keyword)
+                            (@nama = '' OR Nama LIKE @keyword)
                             AND (@kategori = 'Semua Kategori'
-                                 OR Kategori = @kategori)
+                                 OR Category = @kategori)
                             AND (
                                 @stok = 'Semua Stok'
-                                OR (@stok = 'Stok Habis' AND Stok = 0)
+                                OR (@stok = 'Stok Habis' AND Stok <= 0)
                                 OR (@stok = 'Stok Tersedia' AND Stok > 0)
                                 OR (@stok = 'Stok Menipis' AND Stok > 0 AND Stok <= 10)
                             )
@@ -104,6 +116,21 @@ namespace Toko_Obat
                             adapter.Fill(dt);
                             dgvDataProduk.DataSource = dt;
                         }
+
+                        if (dgvDataProduk.Columns["Id"] != null) dgvDataProduk.Columns["Id"].Visible = false;
+                        if (dgvDataProduk.Columns["TanggalKadaluarsa"] != null)
+                            dgvDataProduk.Columns["TanggalKadaluarsa"].DefaultCellStyle.Format = "dd MMM yyyy";
+
+                        if (dgvDataProduk.Columns["FotoProduk"] is DataGridViewImageColumn imgCol)
+                        {
+                            imgCol.HeaderText = "Foto";
+                            imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                            imgCol.Width = 65;
+                            imgCol.DisplayIndex = 0;
+                        }
+
+                        dgvDataProduk.RowTemplate.Height = 55;
+                        dgvDataProduk.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                     }
                 }
             }
@@ -116,13 +143,13 @@ namespace Toko_Obat
         private void btnDashboard_Click(object sender, EventArgs e)
         {
             new Owner_Dashboard().Show();
-            Hide();
+            this.Close();
         }
 
         private void btnTransaksi_Click(object sender, EventArgs e)
         {
             new Owner_Transaksi().Show();
-            Hide();
+            this.Close();
         }
 
         private void btnProduk_Click(object sender, EventArgs e)
@@ -133,13 +160,18 @@ namespace Toko_Obat
         private void btnLog_Click(object sender, EventArgs e)
         {
             new Owner_LogAktivitas().Show();
-            Hide();
+            this.Close();
         }
 
         private void btnProfil_Click(object sender, EventArgs e)
         {
             new Owner_Profil().Show();
-            Hide();
+            this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
 
         private void txtCariNama_TextChanged(object sender, EventArgs e)

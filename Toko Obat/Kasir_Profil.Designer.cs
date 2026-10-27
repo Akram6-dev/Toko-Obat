@@ -218,6 +218,7 @@
             btnLogout.TabIndex = 8;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panel2
             // 
@@ -273,6 +274,7 @@
             lblPassword.TabIndex = 11;
             lblPassword.Text = "label7";
             lblPassword.TextAlign = ContentAlignment.MiddleLeft;
+            lblPassword.Click += lblPassword_Click;
             // 
             // lblUsername
             // 
@@ -283,6 +285,7 @@
             lblUsername.TabIndex = 10;
             lblUsername.Text = "label6";
             lblUsername.TextAlign = ContentAlignment.MiddleLeft;
+            lblUsername.Click += lblUsername_Click;
             // 
             // label5
             // 
@@ -322,6 +325,7 @@
             lblId.TabIndex = 5;
             lblId.Text = "ID: 111";
             lblId.TextAlign = ContentAlignment.MiddleLeft;
+            lblId.Click += lblId_Click;
             // 
             // panel7
             // 
@@ -343,6 +347,7 @@
             lblRole.TabIndex = 4;
             lblRole.Text = "Role";
             lblRole.TextAlign = ContentAlignment.MiddleLeft;
+            lblRole.Click += lblRole_Click;
             // 
             // lblNama
             // 
@@ -353,6 +358,7 @@
             lblNama.Size = new Size(62, 25);
             lblNama.TabIndex = 3;
             lblNama.Text = "Nama";
+            lblNama.Click += lblNama_Click;
             // 
             // label3
             // 
@@ -371,6 +377,7 @@
             fotoProfil.Size = new Size(100, 100);
             fotoProfil.TabIndex = 0;
             fotoProfil.TabStop = false;
+            fotoProfil.Click += fotoProfil_Click;
             // 
             // Kasir_Profil
             // 

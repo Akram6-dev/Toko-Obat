@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using System.Data;
-using System.Globalization;
-using System.Security.Cryptography.Pkcs;
+using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 
 namespace Toko_Obat
 {
     public static class Databases
     {
-        private static readonly string connString = "Server=localhost;Port=3306;Database=tokoobat;User ID=root;Password=;";
+        // Kalimat koneksi yang sudah bersih dan aman
+        private static readonly string connString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TokoObat;Integrated Security=True;TrustServerCertificate=True";
 
         public static SqlConnection GetConn()
         {
@@ -24,7 +20,6 @@ namespace Toko_Obat
             using (SqlConnection conn = GetConn())
             {
                 conn.Open();
-                // Jika belum login, default pakai Id = 1 (Admin)
                 int idUser = UserSession.Id > 0 ? UserSession.Id : 1;
 
                 string query = "INSERT INTO LogAktivitas (IdUser, Aktivitas) VALUES (@idUser, @pesan)";
@@ -41,8 +36,8 @@ namespace Toko_Obat
     public static class UserSession
     {
         public static int Id { get; set; }
-        public static string Username { get; set; }
-        public static string Role { get; set; }
+        public static string? Username { get; set; }
+        public static string? Role { get; set; }
 
         public static bool IsLoggedIn => Id > 0;
 
@@ -58,6 +53,43 @@ namespace Toko_Obat
             Id = 0;
             Username = null;
             Role = null;
+        }
+
+        public static void LakukanLogout(Form currentForm)
+        {
+            DialogResult dialog = MessageBox.Show(
+                "Apakah Anda yakin ingin logout?",
+                "Konfirmasi Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (dialog == DialogResult.Yes)
+            {
+                Databases.CatatLog("Logout dari sistem");
+                Logout();
+
+                Halaman_Login? loginForm = null;
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f is Halaman_Login login)
+                    {
+                        loginForm = login;
+                        break;
+                    }
+                }
+
+                if (loginForm != null)
+                {
+                    loginForm.Show();
+                }
+                else
+                {
+                    new Halaman_Login().Show();
+                }
+
+                currentForm.Close();
+            }
         }
     }
 }

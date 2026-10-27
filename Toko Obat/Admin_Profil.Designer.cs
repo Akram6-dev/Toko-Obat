@@ -1,4 +1,4 @@
-﻿namespace Toko_Obat
+namespace Toko_Obat
 {
     partial class Admin_Profil
     {
@@ -185,6 +185,7 @@
             btnProduk.TabIndex = 10;
             btnProduk.Text = "Produk";
             btnProduk.UseVisualStyleBackColor = true;
+            btnProduk.Click += btnProduk_Click_1;
             // 
             // btnAkun
             // 
@@ -218,6 +219,7 @@
             btnLogout.TabIndex = 8;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panel2
             // 

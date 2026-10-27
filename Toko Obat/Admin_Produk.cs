@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -12,6 +12,7 @@ namespace Toko_Obat
         public Admin_Produk()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void Dashboard_Admin_Load(object sender, EventArgs e)
@@ -40,6 +41,7 @@ namespace Toko_Obat
             dgvDataProduk.AllowUserToAddRows = false;
             dgvDataProduk.RowHeadersVisible = false;
             dgvDataProduk.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvDataProduk.RowTemplate.Height = 60;
 
             MuatDataProduk();
         }
@@ -81,10 +83,24 @@ namespace Toko_Obat
                 }
 
                 if (dgvDataProduk.Columns["Id"] != null) dgvDataProduk.Columns["Id"].Visible = false;
-                if (dgvDataProduk.Columns["FotoProduk"] != null) dgvDataProduk.Columns["FotoProduk"].Visible = false;
+
+                // Tampilkan foto produk di DataGridView
+                if (dgvDataProduk.Columns["FotoProduk"] is DataGridViewImageColumn colFoto)
+                {
+                    colFoto.Visible = true;
+                    colFoto.HeaderText = "Foto";
+                    colFoto.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                    colFoto.DefaultCellStyle.NullValue = null;
+                    colFoto.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    colFoto.Width = 70;
+                    colFoto.DisplayIndex = 0;
+                }
 
                 if (dgvDataProduk.Columns["TanggalKadaluarsa"] != null)
+                {
+                    dgvDataProduk.Columns["TanggalKadaluarsa"].HeaderText = "Kadaluarsa";
                     dgvDataProduk.Columns["TanggalKadaluarsa"].DefaultCellStyle.Format = "dd MMM yyyy";
+                }
             }
             catch (Exception ex)
             {
@@ -214,6 +230,11 @@ namespace Toko_Obat
         {
             new Admin_Profil().Show();
             this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
 
         private void dgvDataProduk_CellContentClick(object sender, DataGridViewCellEventArgs e) { }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -38,6 +38,12 @@
     <Compile Update="Kasir_Transaksi.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Kasir_FormPelanggan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Kasir_StrukDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Kasir_Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -47,7 +53,7 @@
     <Compile Update="Admin_Akun.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Admin_Profi;.cs">
+    <Compile Update="Admin_Profil.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Admin_Produk.cs">

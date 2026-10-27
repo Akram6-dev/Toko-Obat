@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,19 +17,31 @@ namespace Toko_Obat
         public Kasir_Dashboard()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void MuatHalaman()
         {
-            lblWelcome.Text += " " + UserSession.Username.ToUpper();
+            lblWelcome.Text = "SELAMAT DATANG KASIR " + (UserSession.Username ?? "").ToUpper();
 
-            using(SqlConnection conn = Databases.GetConn())
+            using (SqlConnection conn = Databases.GetConn())
             {
                 conn.Open();
-                string query = "SELECT TOP 10 * FROM Transaksi";
+                string query = @"
+                    SELECT TOP 10 
+                        t.Id AS [ID Transaksi], 
+                        COALESCE(p.Nama, 'Umum') AS [Pelanggan], 
+                        t.TotalProduk AS [Total Item], 
+                        t.Harga_Total AS [Total Harga], 
+                        t.Tanggal_Transaksi AS [Tanggal]
+                    FROM Transaksi t 
+                    LEFT JOIN Pelanggan p ON t.IdPelanggan = p.Id 
+                    ORDER BY t.Tanggal_Transaksi DESC";
+
                 string queryTT = "SELECT COUNT(*) FROM Transaksi";
                 string queryTPE = "SELECT COUNT(*) FROM Pelanggan";
                 string queryTP = "SELECT COUNT(*) FROM Produk";
+
                 using (SqlDataAdapter da = new SqlDataAdapter(query, conn))
                 {
                     DataTable dt = new DataTable();
@@ -39,17 +51,17 @@ namespace Toko_Obat
 
                 using (SqlCommand cmdTT = new SqlCommand(queryTT, conn))
                 {
-                    lblTotalTransaksi.Text = cmdTT.ExecuteScalar().ToString();
+                    lblTotalTransaksi.Text = cmdTT.ExecuteScalar()?.ToString() ?? "0";
                 }
 
-                using (SqlCommand cmdTPE = new SqlCommand(queryTT, conn))
+                using (SqlCommand cmdTPE = new SqlCommand(queryTPE, conn))
                 {
-                    lblTotalPelanggan.Text = cmdTPE.ExecuteScalar().ToString();
+                    lblTotalPelanggan.Text = cmdTPE.ExecuteScalar()?.ToString() ?? "0";
                 }
 
-                using (SqlCommand cmdTP = new SqlCommand(queryTT, conn))
+                using (SqlCommand cmdTP = new SqlCommand(queryTP, conn))
                 {
-                    lblTotalProduk.Text = cmdTP.ExecuteScalar().ToString();
+                    lblTotalProduk.Text = cmdTP.ExecuteScalar()?.ToString() ?? "0";
                 }
             }
             dgv10TransaksiTerakhir.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -58,6 +70,8 @@ namespace Toko_Obat
             dgv10TransaksiTerakhir.AllowUserToAddRows = false;
             dgv10TransaksiTerakhir.RowHeadersVisible = false;
             dgv10TransaksiTerakhir.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            if (dgv10TransaksiTerakhir.Columns["Tanggal"] != null)
+                dgv10TransaksiTerakhir.Columns["Tanggal"].DefaultCellStyle.Format = "dd MMM yyyy HH:mm";
         }
 
         private void panel4_Paint(object sender, PaintEventArgs e)
@@ -101,6 +115,36 @@ namespace Toko_Obat
         private void Kasir_Dashboard_Load(object sender, EventArgs e)
         {
             MuatHalaman();
+        }
+
+        private void lblWelcome_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTotalTransaksi_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTotalPelanggan_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblTotalProduk_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgv10TransaksiTerakhir_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
     }
 }                   

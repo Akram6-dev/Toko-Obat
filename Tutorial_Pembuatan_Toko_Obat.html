@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tutorial Pembuatan Sistem Informasi Toko Obat</title>
+<style>
+    @page {
+        size: A4;
+        margin: 16mm 14mm 16mm 14mm;
+    }
+    
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+        font-size: 13.5px;
+        line-height: 1.6;
+    }
+    
+    .cover-page {
+        page-break-after: always;
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(135deg, #094b41 0%, #0f9d8a 100%);
+        color: white;
+        padding: 40px 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+    }
+    
+    .cover-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(8px);
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .cover-title {
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 1.25;
+        margin-bottom: 15px;
+    }
+    
+    .cover-subtitle {
+        font-size: 16px;
+        font-weight: 400;
+        color: #d1fae5;
+        max-width: 650px;
+        margin-bottom: 35px;
+    }
+    
+    .cover-meta {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 15px 25px;
+        border-radius: 8px;
+        display: flex;
+        gap: 25px;
+        font-size: 12.5px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .cover-meta div {
+        text-align: left;
+    }
+    
+    .cover-meta strong {
+        display: block;
+        color: #6ee7b7;
+    }
+    
+    /* Chapter styling */
+    .chapter {
+        margin-bottom: 35px;
+    }
+    
+    .chapter-break {
+        page-break-before: always;
+    }
+    
+    .chapter-header {
+        border-bottom: 3px solid #0f9d8a;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .chapter-badge {
+        display: inline-block;
+        background: #0f9d8a;
+        color: white;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        padding: 3px 10px;
+        border-radius: 4px;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+    }
+    
+    .chapter-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 6px;
+    }
+    
+    .chapter-desc {
+        color: #64748b;
+        font-size: 13px;
+    }
+    
+    /* Page section */
+    .page-section {
+        margin-bottom: 25px;
+    }
+    
+    .page-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #047857;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .page-title::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 18px;
+        background: #0f9d8a;
+        border-radius: 2px;
+    }
+    
+    /* Function Card */
+    .func-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        page-break-inside: avoid;
+        overflow: hidden;
+    }
+    
+    .func-header {
+        background: #f1f5f9;
+        padding: 10px 14px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .func-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+        font-family: 'Consolas', monospace;
+    }
+    
+    .func-type {
+        font-size: 10px;
+        font-weight: 700;
+        background: #0f9d8a;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        letter-spacing: 0.5px;
+    }
+    
+    .func-body {
+        padding: 12px 14px;
+    }
+    
+    .func-summary {
+        background: #f0fdf4;
+        border-left: 3px solid #10b981;
+        padding: 8px 12px;
+        border-radius: 0 4px 4px 0;
+        margin-bottom: 12px;
+        font-size: 12.5px;
+        color: #065f46;
+        line-height: 1.5;
+    }
+    
+    .func-summary strong {
+        color: #047857;
+        display: block;
+        margin-bottom: 2px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Code Card (Carbon / Mac style) */
+    .code-card {
+        background: #181825;
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid #313244;
+    }
+    
+    .code-topbar {
+        background: #11111b;
+        padding: 6px 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        border-bottom: 1px solid #313244;
+    }
+    
+    .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .dot-red { background: #f38ba8; }
+    .dot-yellow { background: #f9e2af; }
+    .dot-green { background: #a6e3a1; }
+    
+    .code-filename {
+        margin-left: 8px;
+        font-size: 11px;
+        color: #a6adc8;
+        font-family: 'Consolas', monospace;
+    }
+    
+    pre.code-content {
+        padding: 12px 14px;
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 11.5px;
+        line-height: 1.55;
+        color: #cdd6f4;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        tab-size: 4;
+    }
+    
+    /* Syntax highlighting token colors */
+    .tok-kw { color: #cba6f7; font-weight: bold; }
+    .tok-type { color: #89dceb; }
+    .tok-string { color: #a6e3a1; }
+    .tok-comment { color: #6c7086; font-style: italic; }
+    .tok-num { color: #fab387; }
+</style>
+</head>
+<body>
+
+<div class="cover-page">
+    <div class="cover-badge">Dokumen Panduan Teknis & Tutorial</div>
+    <h1 class="cover-title">Tutorial Lengkap Pembuatan Aplikasi<br>Sistem Informasi Toko Obat (Apotek)</h1>
+    <p class="cover-subtitle">Panduan langkah demi langkah implementasi kode Windows Forms C# .NET 8 dan Microsoft SQL Server dengan arsitektur multi-role: Halaman Login &rarr; Admin &rarr; Kasir &rarr; Owner.</p>
+    
+    <div class="cover-meta">
+        <div>
+            <strong>BAHASA PEMROGRAMAN</strong>
+            C# 12 / .NET 8.0 WinForms
+        </div>
+        <div>
+            <strong>DATABASE ENGINE</strong>
+            Microsoft SQL Server (T-SQL)
+        </div>
+        <div>
+            <strong>FORMAT PENYUSUNAN</strong>
+            Penjelasan Fungsi per Fungsi
+        </div>
+    </div>
+</div>
+
+
+    <div class="chapter " id="chap-0">
+        <div class="chapter-header">
+            <span class="chapter-badge">FONDASI SISTEM</span>
+            <h2 class="chapter-title">Bab 0: Fondasi Database & Kelas Inti</h2>
+            <p class="chapter-desc">Sebelum masuk ke tampilan halaman, aplikasi butuh koneksi database SQL Server dan sistem untuk mengingat siapa pengguna yang sedang login.</p>
+        </div>
+    
+        <div class="page-section">
+            <h3 class="page-title">Struktur Database SQL Server <span style="font-size:12px; font-weight:normal; color:#64748b;">(tokoobat.sql)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">Skema Tabel Utama Apotek</span>
+                    <span class="func-type">DATABASE SCHEMA</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Mendefinisikan 6 tabel utama: Users (akun pegawai &amp; role), Produk (stok &amp; harga obat), Pelanggan (data customer), Transaksi (header penjualan), DetailTransaksi (item obat yang terjual), dan LogAktivitas (rekam jejak seluruh aksi).
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">tokoobat.sql &mdash; Skema Tabel Utama Apotek</span>
+                        </div>
+                        <pre class="code-content">-- Tabel Akun Pengguna (Admin, Kasir, Owner)
+CREATE TABLE Users (
+    Id INT IDENTITY(<span class="tok-num">1</span>,<span class="tok-num">1</span>) PRIMARY KEY,
+    Nama VARCHAR(<span class="tok-num">100</span>) NOT NULL UNIQUE,
+    Password VARCHAR(<span class="tok-num">255</span>) NOT NULL,
+    Role VARCHAR(<span class="tok-num">50</span>) NOT NULL,
+    FotoProfil VARBINARY(MAX) NULL
+);
+
+-- Tabel Data Obat / Produk
+CREATE TABLE Produk (
+    Id INT IDENTITY(<span class="tok-num">1</span>,<span class="tok-num">1</span>) PRIMARY KEY,
+    IdAdmin INT NOT NULL,
+    Nama VARCHAR(<span class="tok-num">100</span>) NOT NULL,
+    Category VARCHAR(<span class="tok-num">100</span>) NOT NULL,
+    TanggalKadaluarsa DATE NOT NULL,
+    Stok INT NOT NULL,
+    Jenis VARCHAR(<span class="tok-num">50</span>) NOT NULL,
+    Harga VARCHAR(<span class="tok-num">50</span>) NOT NULL,
+    FotoProduk VARBINARY(MAX) NULL,
+    Deskripsi VARCHAR(<span class="tok-num">255</span>) NULL
+);
+
+-- Tabel Transaksi Kasir
+CREATE TABLE Transaksi (
+    Id INT IDENTITY(<span class="tok-num">1</span>,<span class="tok-num">1</span>) PRIMARY KEY,
+    IdKasir INT NOT NULL,
+    IdPelanggan INT NULL,
+    TotalProduk INT NOT NULL,
+    Harga_Total INT NOT NULL,
+    Uang_Bayar INT NOT NULL,
+    Uang_Kembali INT NOT NULL,
+    Tanggal_Transaksi DATETIME DEFAULT GETDATE()
+);</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Kelas Sentral (Koneksi & Sesi) <span style="font-size:12px; font-weight:normal; color:#64748b;">(TokoObatClasses.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">Databases.GetConn()</span>
+                    <span class="func-type">METHOD</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Fungsi ini dipakai untuk membuka jembatan koneksi ke database SQL Server lokal dengan TrustServerCertificate=True.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">TokoObatClasses.cs &mdash; Databases.GetConn()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">public</span> <span <span class="tok-kw">class</span>="tok-kw">static</span> <span class="tok-type">SqlConnection</span> GetConn()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> connString = @<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Data Source=localhost;Initial Catalog=tokoobat;Integrated Security=True;TrustServerCertificate=True;&quot;</span>;
+    <span <span class="tok-kw">class</span>="tok-kw">return</span> <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlConnection</span>(connString);
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">Databases.CatatLog(string pesanAktivitas)</span>
+                    <span class="func-type">METHOD</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Fungsi otomatis buat mencatat setiap aksi pegawai (seperti login, tambah obat, transaksi) ke dalam tabel LogAktivitas biar Owner bisa audit.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">TokoObatClasses.cs &mdash; Databases.CatatLog(string pesanAktivitas)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">public</span> <span <span class="tok-kw">class</span>="tok-kw">static</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> CatatLog(<span <span class="tok-kw">class</span>="tok-kw">string</span> pesanAktivitas)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">try</span>
+    {
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = GetConn())
+        {
+            conn.Open();
+            <span <span class="tok-kw">class</span>="tok-kw">string</span> query = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;INSERT INTO LogAktivitas (IdUser, Aktivitas, Waktu) VALUES (@idUser, @pesan, GETDATE())&quot;</span>;
+            <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(query, conn))
+            {
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@idUser&quot;</span>, <span class="tok-type">UserSession</span>.Id &gt; <span class="tok-num">0</span> ? <span class="tok-type">UserSession</span>.Id : (<span class="tok-kw">object</span>)DBNull.Value);
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@pesan&quot;</span>, pesanAktivitas);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+    <span <span class="tok-kw">class</span>="tok-kw">catch</span> { /* Jangan sampai log menggagalkan proses utama */ }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">UserSession.SetUser(...) &amp; LakukanLogout(...)</span>
+                    <span class="func-type">METHOD</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Fungsi SetUser menyimpan ID, Username, dan Role siapa yang login. Fungsi LakukanLogout membersihkan sesi, mencatat aktivitas logout, lalu mengembalikan layar ke Form Login.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">TokoObatClasses.cs &mdash; UserSession.SetUser(...) &amp; LakukanLogout(...)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">public</span> <span <span class="tok-kw">class</span>="tok-kw">static</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> SetUser(<span <span class="tok-kw">class</span>="tok-kw">int</span> id, <span <span class="tok-kw">class</span>="tok-kw">string</span> username, <span <span class="tok-kw">class</span>="tok-kw">string</span> role)
+{
+    Id = id;
+    Username = username;
+    Role = role;
+}
+
+<span <span class="tok-kw">class</span>="tok-kw">public</span> <span <span class="tok-kw">class</span>="tok-kw">static</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> LakukanLogout(<span class="tok-type">Form</span> formAktif)
+{
+    <span class="tok-type">DialogResult</span> konfirmasi = <span class="tok-type">MessageBox</span>.Show(
+        <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Apakah Anda yakin ingin logout dari sistem?&quot;</span>,
+        <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Konfirmasi Logout&quot;</span>,
+        <span class="tok-type">MessageBoxButtons</span>.YesNo,
+        <span class="tok-type">MessageBoxIcon</span>.Question
+    );
+
+    <span <span class="tok-kw">class</span>="tok-kw">if</span> (konfirmasi == <span class="tok-type">DialogResult</span>.Yes)
+    {
+        <span class="tok-type">Databases</span>.CatatLog(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Logout dari sistem&quot;</span>);
+        Clear();
+
+        <span class="tok-type">Form</span>? loginForm = <span class="tok-kw">null</span>;
+        <span <span class="tok-kw">class</span>="tok-kw">foreach</span> (<span class="tok-type">Form</span> f <span <span class="tok-kw">class</span>="tok-kw">in</span> Application.OpenForms)
+        {
+            <span <span class="tok-kw">class</span>="tok-kw">if</span> (f is Halaman_Login)
+            {
+                loginForm = f;
+                <span <span class="tok-kw">class</span>="tok-kw">break</span>;
+            }
+        }
+
+        <span <span class="tok-kw">class</span>="tok-kw">if</span> (loginForm != <span class="tok-kw">null</span>)
+        {
+            loginForm.Show();
+            formAktif.Close();
+        }
+        <span <span class="tok-kw">class</span>="tok-kw">else</span>
+        {
+            <span <span class="tok-kw">class</span>="tok-kw">new</span> Halaman_Login().Show();
+            formAktif.Close();
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div></div>
+    <div class="chapter chapter-break" id="chap-1">
+        <div class="chapter-header">
+            <span class="chapter-badge">AUTENTIKASI</span>
+            <h2 class="chapter-title">Bab 1: Halaman Login (Halaman_Login)</h2>
+            <p class="chapter-desc">Gerbang utama sistem untuk menyaring siapa yang masuk, memastikan password benar, dan mengarahkan pengguna ke dashboard sesuai wewenangnya.</p>
+        </div>
+    
+        <div class="page-section">
+            <h3 class="page-title">Form Login <span style="font-size:12px; font-weight:normal; color:#64748b;">(Halaman_Login.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">Halaman_Login() (Constructor)</span>
+                    <span class="func-type">CONSTRUCTOR</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Dijalankan pertama kali saat aplikasi dibuka. Mengatur agar layar langsung Fullscreen (Maximized) dan jika jendela login ditutup maka seluruh aplikasi berhenti.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Halaman_Login.cs &mdash; Halaman_Login() (Constructor)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">public</span> Halaman_Login()
+{
+    InitializeComponent();
+    <span class="tok-kw">this</span>.WindowState = <span class="tok-type">FormWindowState</span>.Maximized; <span <span class="tok-kw">class</span>="tok-comment">// Auto Fullscreen</span>
+    <span class="tok-kw">this</span>.DoubleBuffered = <span class="tok-kw">true</span>;
+    <span class="tok-kw">this</span>.FormClosed += (s, e) =&gt; Application.Exit();
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">button1_Click(object sender, EventArgs e)</span>
+                    <span class="func-type">EVENT HANDLER (TOMBOL LOGIN)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Mengecek apakah username dan password yang diketik ada di tabel Users. Jika valid, sesi login disimpan dan aplikasi membuka Dashboard yang sesuai: Admin, Kasir, atau Owner.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Halaman_Login.cs &mdash; button1_Click(object sender, EventArgs e)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> button1_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> username = txtUsername.Text.Trim();
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> password = txtPassword.Text.Trim();
+
+    <span <span class="tok-kw">class</span>="tok-kw">if</span> (<span <span class="tok-kw">class</span>="tok-kw">string</span>.IsNullOrEmpty(username) || <span <span class="tok-kw">class</span>="tok-kw">string</span>.IsNullOrEmpty(password))
+    {
+        lblError.Text = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Harap isi username dan password.&quot;</span>;
+        <span <span class="tok-kw">class</span>="tok-kw">return</span>;
+    }
+
+    <span <span class="tok-kw">class</span>="tok-kw">try</span>
+    {
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+        {
+            conn.Open();
+            <span <span class="tok-kw">class</span>="tok-kw">string</span> query = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;SELECT Id, Nama, Role FROM Users WHERE Nama = @username AND Password = @password&quot;</span>;
+            <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(query, conn))
+            {
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@username&quot;</span>, username);
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@password&quot;</span>, password);
+
+                <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlDataReader</span> reader = cmd.ExecuteReader())
+                {
+                    <span <span class="tok-kw">class</span>="tok-kw">if</span> (reader.Read())
+                    {
+                        <span <span class="tok-kw">class</span>="tok-kw">int</span> idUser = <span class="tok-type">Convert</span>.ToInt32(reader[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Id&quot;</span>]);
+                        <span <span class="tok-kw">class</span>="tok-kw">string</span> roleAkun = reader[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Role&quot;</span>].ToString();
+
+                        <span <span class="tok-kw">class</span>="tok-comment">// Simpan sesi login saat ini</span>
+                        <span class="tok-type">UserSession</span>.SetUser(idUser, username, roleAkun);
+                        <span class="tok-type">Databases</span>.CatatLog($<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Login ke sistem sebagai {roleAkun}&quot;</span>);
+
+                        txtPassword.Clear();
+                        lblError.Text = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;&quot;</span>;
+
+                        <span <span class="tok-kw">class</span>="tok-comment">// Pindah ke halaman sesuai Role</span>
+                        <span <span class="tok-kw">class</span>="tok-kw">if</span> (roleAkun == <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Admin&quot;</span>)
+                        {
+                            <span <span class="tok-kw">class</span>="tok-kw">new</span> Admin_Dashboard().Show();
+                            <span class="tok-kw">this</span>.Hide();
+                        }
+                        <span <span class="tok-kw">class</span>="tok-kw">else</span> <span <span class="tok-kw">class</span>="tok-kw">if</span> (roleAkun == <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Kasir&quot;</span>)
+                        {
+                            <span <span class="tok-kw">class</span>="tok-kw">new</span> Kasir_Dashboard().Show();
+                            <span class="tok-kw">this</span>.Hide();
+                        }
+                        <span <span class="tok-kw">class</span>="tok-kw">else</span> <span <span class="tok-kw">class</span>="tok-kw">if</span> (roleAkun == <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Owner&quot;</span>)
+                        {
+                            <span <span class="tok-kw">class</span>="tok-kw">new</span> Owner_Dashboard().Show();
+                            <span class="tok-kw">this</span>.Hide();
+                        }
+                    }
+                    <span <span class="tok-kw">class</span>="tok-kw">else</span>
+                    {
+                        lblError.Text = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Username atau password salah!&quot;</span>;
+                    }
+                }
+            }
+        }
+    }
+    <span <span class="tok-kw">class</span>="tok-kw">catch</span> (Exception ex)
+    {
+        <span class="tok-type">MessageBox</span>.Show(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Gagal terhubung ke database: &quot;</span> + ex.Message);
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div></div>
+    <div class="chapter chapter-break" id="chap-2">
+        <div class="chapter-header">
+            <span class="chapter-badge">MODUL ADMIN</span>
+            <h2 class="chapter-title">Bab 2: Modul Admin (Pengelolaan Toko & Master Data)</h2>
+            <p class="chapter-desc">Modul untuk administrator: memantau aktivitas sistem, mengelola akun seluruh pegawai, mengatur inventori obat lengkap dengan foto, dan mengedit profil pribadi.</p>
+        </div>
+    
+        <div class="page-section">
+            <h3 class="page-title">Admin_Dashboard.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Admin_Dashboard.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">MuatHalaman()</span>
+                    <span class="func-type">METHOD</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Mengambil ringkasan statistik (Total Transaksi, Total Akun Pegawai, Total Obat) dan menampilkan tabel 10 aktivitas pegawai terkini dari tabel LogAktivitas.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Admin_Dashboard.cs &mdash; MuatHalaman()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> MuatHalaman()
+{
+    lblWelcome.Text = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Selamat datang, &quot;</span> + <span class="tok-type">UserSession</span>.Username.ToUpper();
+
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+
+        <span <span class="tok-kw">class</span>="tok-comment">// Ambil <span class="tok-num">10</span> aktivitas terbaru di sistem</span>
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> queryLog = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+            SELECT TOP <span class="tok-num">10</span> 
+                l.Id AS [ID], 
+                COALESCE(u.Nama, &#x27;Sistem&#x27;) AS [Pengguna], 
+                l.Aktivitas AS [Aktivitas], 
+                l.Waktu AS [Waktu] 
+            FROM LogAktivitas l 
+            LEFT JOIN Users u ON l.IdUser = u.Id 
+            ORDER BY l.Waktu DESC&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlDataAdapter</span> da = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlDataAdapter</span>(queryLog, conn))
+        {
+            <span class="tok-type">DataTable</span> dt = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">DataTable</span>();
+            da.Fill(dt);
+            dgv10AktivitasTerkini.DataSource = dt;
+        }
+
+        <span <span class="tok-kw">class</span>="tok-comment">// Hitung total angka untuk kartu metrik</span>
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;SELECT COUNT(*) FROM Transaksi&quot;</span>, conn))
+            lblTotalTransaksi.Text = cmd.ExecuteScalar()?.ToString() ?? <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;<span class="tok-num">0</span>&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;SELECT COUNT(*) FROM Users&quot;</span>, conn))
+            lblTotalAkun.Text = cmd.ExecuteScalar()?.ToString() ?? <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;<span class="tok-num">0</span>&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;SELECT COUNT(*) FROM Produk&quot;</span>, conn))
+            lblTotalProduk.Text = cmd.ExecuteScalar()?.ToString() ?? <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;<span class="tok-num">0</span>&quot;</span>;
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">Navigasi Sidebar Admin</span>
+                    <span class="func-type">EVENT HANDLER (TOMBOL MENU)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Fungsi untuk berpindah antar halaman admin (Akun, Produk, Profil) dan tombol Logout yang aman.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Admin_Dashboard.cs &mdash; Navigasi Sidebar Admin</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnAkun_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">new</span> Admin_Akun().Show();
+    <span class="tok-kw">this</span>.Close();
+}
+
+<span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnProduk_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">new</span> Admin_Produk().Show();
+    <span class="tok-kw">this</span>.Close();
+}
+
+<span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnProfil_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">new</span> Admin_Profil().Show();
+    <span class="tok-kw">this</span>.Close();
+}
+
+<span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnLogout_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span class="tok-type">UserSession</span>.LakukanLogout(<span class="tok-kw">this</span>);
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Admin_Akun.cs & Admin_FormAkun.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Admin_Akun.cs / Admin_FormAkun.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">MuatDataAkun()</span>
+                    <span class="func-type">METHOD (TABEL AKUN)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Menampilkan seluruh akun staf dari tabel Users ke DataGridView, lengkap dengan filter pencarian nama dan filter role (Admin/Kasir/Owner).
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Admin_Akun.cs / Admin_FormAkun.cs &mdash; MuatDataAkun()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> MuatDataAkun()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> query = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+            SELECT Id, Nama, Role 
+            FROM Users 
+            WHERE (@nama = &#x27;&#x27; OR Nama LIKE @keyword)
+              AND (@role = &#x27;Semua Role&#x27; OR Role = @role)
+            ORDER BY Id DESC&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(query, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@nama&quot;</span>, txtCariNama.Text.Trim());
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@keyword&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;%&quot;</span> + txtCariNama.Text.Trim() + <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;%&quot;</span>);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@role&quot;</span>, cmbCariRole.SelectedItem?.ToString() ?? <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Semua Role&quot;</span>);
+
+            <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlDataAdapter</span> da = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlDataAdapter</span>(cmd))
+            {
+                <span class="tok-type">DataTable</span> dt = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">DataTable</span>();
+                da.Fill(dt);
+                dgvDataProduk.DataSource = dt;
+            }
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">Admin_FormAkun -&gt; btnSimpan_Click(...)</span>
+                    <span class="func-type">EVENT HANDLER (POPUP SIMPAN AKUN)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Menyimpan akun baru atau mengupdate akun lama. Jika memilih foto profil, file gambar diubah menjadi biner byte[] untuk disimpan ke kolom FotoProfil (VARBINARY).
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Admin_Akun.cs / Admin_FormAkun.cs &mdash; Admin_FormAkun -&gt; btnSimpan_Click(...)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnSimpan_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">byte</span>[]? fotoBytes = <span class="tok-kw">null</span>;
+        <span <span class="tok-kw">class</span>="tok-kw">if</span> (!<span <span class="tok-kw">class</span>="tok-kw">string</span>.IsNullOrEmpty(jalurFoto) &amp;&amp; File.Exists(jalurFoto))
+            fotoBytes = File.ReadAllBytes(jalurFoto);
+
+        <span <span class="tok-kw">class</span>="tok-kw">if</span> (idEdit == <span class="tok-kw">null</span>) <span <span class="tok-kw">class</span>="tok-comment">// Tambah Akun Baru</span>
+        {
+            <span <span class="tok-kw">class</span>="tok-kw">string</span> sql = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;INSERT INTO Users (Nama, Password, Role, FotoProfil) VALUES (@nama, @pass, @role, @foto)&quot;</span>;
+            <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(sql, conn))
+            {
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@nama&quot;</span>, txtNama.Text.Trim());
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@pass&quot;</span>, textPass.Text.Trim());
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@role&quot;</span>, cmbRole.Text);
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@foto&quot;</span>, fotoBytes != <span class="tok-kw">null</span> ? (<span class="tok-kw">object</span>)fotoBytes : DBNull.Value);
+                cmd.ExecuteNonQuery();
+            }
+            <span class="tok-type">Databases</span>.CatatLog($<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Menambahkan akun {cmbRole.Text}: {txtNama.Text.Trim()}&quot;</span>);
+        }
+        <span <span class="tok-kw">class</span>="tok-kw">else</span> <span <span class="tok-kw">class</span>="tok-comment">// Update Akun</span>
+        {
+            <span <span class="tok-kw">class</span>="tok-kw">string</span> sql = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;UPDATE Users SET Nama = @nama, Role = @role WHERE Id = @id&quot;</span>;
+            <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(sql, conn))
+            {
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@id&quot;</span>, idEdit.Value);
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@nama&quot;</span>, txtNama.Text.Trim());
+                cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@role&quot;</span>, cmbRole.Text);
+                cmd.ExecuteNonQuery();
+            }
+            <span class="tok-type">Databases</span>.CatatLog($<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Memperbarui akun: {txtNama.Text.Trim()}&quot;</span>);
+        }
+    }
+    <span class="tok-kw">this</span>.<span class="tok-type">DialogResult</span> = <span class="tok-type">DialogResult</span>.OK;
+    <span class="tok-kw">this</span>.Close();
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Admin_Produk.cs & Admin_FormProduk.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Admin_Produk.cs / Admin_FormProduk.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">MuatDataProduk()</span>
+                    <span class="func-type">METHOD (TABEL OBAT)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Mengambil data seluruh obat. Kolom FotoProduk otomatis disetel sebagai thumbnail bergambar (Zoom), filter kategori obat, dan status stok (Tersedia, Menipis, Habis).
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Admin_Produk.cs / Admin_FormProduk.cs &mdash; MuatDataProduk()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> MuatDataProduk()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> query = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+            SELECT Id, FotoProduk, Nama, Category AS Kategori, TanggalKadaluarsa, Stok, Jenis, Harga, Deskripsi 
+            FROM Produk 
+            WHERE (@nama = &#x27;&#x27; OR Nama LIKE @keyword)
+              AND (@kategori = &#x27;Semua Kategori&#x27; OR Category = @kategori)
+            ORDER BY Id DESC&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(query, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@nama&quot;</span>, txtCariNama.Text.Trim());
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@keyword&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;%&quot;</span> + txtCariNama.Text.Trim() + <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;%&quot;</span>);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@kategori&quot;</span>, cmbCariCategory.SelectedItem?.ToString() ?? <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Semua Kategori&quot;</span>);
+
+            <span class="tok-type">DataTable</span> dt = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">DataTable</span>();
+            <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlDataAdapter</span>(cmd).Fill(dt);
+            dgvDataProduk.DataSource = dt;
+
+            <span <span class="tok-kw">class</span>="tok-comment">// Atur gambar foto produk agar tampil cantik sebagai thumbnail</span>
+            <span <span class="tok-kw">class</span>="tok-kw">if</span> (dgvDataProduk.Columns[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;FotoProduk&quot;</span>] is DataGridViewImageColumn imgCol)
+            {
+                imgCol.HeaderText = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Foto&quot;</span>;
+                imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                imgCol.Width = <span class="tok-num">70</span>;
+                imgCol.DisplayIndex = <span class="tok-num">0</span>;
+            }
+            dgvDataProduk.RowTemplate.Height = <span class="tok-num">60</span>;
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">Admin_FormProduk -&gt; btnSimpan_Click(...)</span>
+                    <span class="func-type">EVENT HANDLER (POPUP SIMPAN OBAT)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Menyimpan data obat baru atau mengupdate obat yang diedit, termasuk upload gambar kemasan obat ke format biner SQL Server.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Admin_Produk.cs / Admin_FormProduk.cs &mdash; Admin_FormProduk -&gt; btnSimpan_Click(...)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnSimpan_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">byte</span>[]? fotoBytes = <span class="tok-kw">null</span>;
+        <span <span class="tok-kw">class</span>="tok-kw">if</span> (!<span <span class="tok-kw">class</span>="tok-kw">string</span>.IsNullOrEmpty(jalurFoto) &amp;&amp; File.Exists(jalurFoto))
+            fotoBytes = File.ReadAllBytes(jalurFoto);
+
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> sql = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+            INSERT INTO Produk (IdAdmin, Nama, Category, TanggalKadaluarsa, Stok, Jenis, Harga, Deskripsi, FotoProduk)
+            VALUES (@admin, @nama, @cat, @exp, @stok, @jenis, @harga, @desk, @foto)&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(sql, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@admin&quot;</span>, <span class="tok-type">UserSession</span>.Id &gt; <span class="tok-num">0</span> ? <span class="tok-type">UserSession</span>.Id : <span class="tok-num">1</span>);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@nama&quot;</span>, txtNama.Text.Trim());
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@cat&quot;</span>, cmbCategory.Text);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@exp&quot;</span>, dtpKadaluarsa.Value.Date);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@stok&quot;</span>, <span <span class="tok-kw">class</span>="tok-kw">int</span>.Parse(txtStok.Text.Trim()));
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@jenis&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Obat&quot;</span>);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@harga&quot;</span>, txtHarga.Text.Trim());
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@desk&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Obat Apotek&quot;</span>);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@foto&quot;</span>, fotoBytes != <span class="tok-kw">null</span> ? (<span class="tok-kw">object</span>)fotoBytes : DBNull.Value);
+            cmd.ExecuteNonQuery();
+        }
+        <span class="tok-type">Databases</span>.CatatLog($<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Menambahkan obat baru: {txtNama.Text.Trim()}&quot;</span>);
+    }
+    <span class="tok-kw">this</span>.<span class="tok-type">DialogResult</span> = <span class="tok-type">DialogResult</span>.OK;
+    <span class="tok-kw">this</span>.Close();
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Admin_Profil.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Admin_Profil.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">MuatDataProfil() &amp; btnSimpan_Click(...)</span>
+                    <span class="func-type">METHOD & EVENT</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        MuatDataProfil menampilkan nama, role, dan foto profil admin. Tombol simpan memproses pembaruan password baru jika admin ingin mengganti kata sandi.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Admin_Profil.cs &mdash; MuatDataProfil() &amp; btnSimpan_Click(...)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> MuatDataProfil()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> sql = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;SELECT TOP <span class="tok-num">1</span> Id, Nama, Role, FotoProfil FROM Users WHERE Id = @id&quot;</span>;
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(sql, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@id&quot;</span>, <span class="tok-type">UserSession</span>.Id);
+            <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlDataReader</span> r = cmd.ExecuteReader())
+            {
+                <span <span class="tok-kw">class</span>="tok-kw">if</span> (r.Read())
+                {
+                    lblNama.Text = r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Nama&quot;</span>].ToString();
+                    lblRole.Text = r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Role&quot;</span>].ToString();
+                    <span <span class="tok-kw">class</span>="tok-kw">if</span> (r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;FotoProfil&quot;</span>] != DBNull.Value)
+                    {
+                        <span <span class="tok-kw">class</span>="tok-kw">byte</span>[] bytes = (<span <span class="tok-kw">class</span>="tok-kw">byte</span>[])r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;FotoProfil&quot;</span>];
+                        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">MemoryStream</span> ms = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">MemoryStream</span>(bytes))
+                            fotoProfil.<span class="tok-type">Image</span> = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">Bitmap</span>(<span class="tok-type">Image</span>.FromStream(ms));
+                    }
+                }
+            }
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div></div>
+    <div class="chapter chapter-break" id="chap-3">
+        <div class="chapter-header">
+            <span class="chapter-badge">MODUL KASIR</span>
+            <h2 class="chapter-title">Bab 3: Modul Kasir (Point of Sale & Transaksi Penjualan)</h2>
+            <p class="chapter-desc">Jantung operasional penjualan obat: pencatatan keranjang belanja sementara, cek ketersediaan stok fisik realtime, transaksi database ACID, cetak nota struk, dan pendaftaran pelanggan baru.</p>
+        </div>
+    
+        <div class="page-section">
+            <h3 class="page-title">Kasir_Transaksi.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Kasir_Transaksi.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">InisialisasiTabelKeranjang()</span>
+                    <span class="func-type">METHOD</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Membuat tabel sementara (DataTable di memori) dengan kolom No, Nama Obat, Harga Satuan, Jumlah, dan Subtotal untuk ditampilkan di DataGridView belanjaan.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Kasir_Transaksi.cs &mdash; InisialisasiTabelKeranjang()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> InisialisasiTabelKeranjang()
+{
+    dtKeranjang = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">DataTable</span>();
+    dtKeranjang.Columns.Add(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;IdProduk&quot;</span>, typeof(<span <span class="tok-kw">class</span>="tok-kw">int</span>));
+    dtKeranjang.Columns.Add(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;No&quot;</span>, typeof(<span <span class="tok-kw">class</span>="tok-kw">int</span>));
+    dtKeranjang.Columns.Add(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Nama Obat&quot;</span>, typeof(<span <span class="tok-kw">class</span>="tok-kw">string</span>));
+    dtKeranjang.Columns.Add(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Harga Satuan&quot;</span>, typeof(<span <span class="tok-kw">class</span>="tok-kw">int</span>));
+    dtKeranjang.Columns.Add(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Jumlah&quot;</span>, typeof(<span <span class="tok-kw">class</span>="tok-kw">int</span>));
+    dtKeranjang.Columns.Add(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Subtotal&quot;</span>, typeof(<span <span class="tok-kw">class</span>="tok-kw">int</span>));
+
+    dataGridView1.DataSource = dtKeranjang;
+    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+    dataGridView1.ReadOnly = <span class="tok-kw">true</span>;
+    dataGridView1.AllowUserToAddRows = <span class="tok-kw">false</span>;
+    dataGridView1.Columns[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;IdProduk&quot;</span>].Visible = <span class="tok-kw">false</span>; <span <span class="tok-kw">class</span>="tok-comment">// Sembunyikan ID teknis</span>
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">btnCatat_Click(object sender, EventArgs e)</span>
+                    <span class="func-type">EVENT HANDLER (TOMBOL CATAT OBAT)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Mencatat obat yang dipilih ke keranjang belanja. Mengecek stok di database agar kasir tidak menjual melebihi stok yang ada di apotek, lalu menghitung subtotal.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Kasir_Transaksi.cs &mdash; btnCatat_Click(object sender, EventArgs e)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnCatat_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> namaBarang = txtBarang.Text.Trim();
+    <span <span class="tok-kw">class</span>="tok-kw">if</span> (!<span <span class="tok-kw">class</span>="tok-kw">int</span>.TryParse(txtJumlah.Text.Trim(), out <span <span class="tok-kw">class</span>="tok-kw">int</span> qty) || qty &lt;= <span class="tok-num">0</span>)
+    {
+        <span class="tok-type">MessageBox</span>.Show(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Masukkan jumlah obat yang valid!&quot;</span>);
+        <span <span class="tok-kw">class</span>="tok-kw">return</span>;
+    }
+
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> query = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;SELECT TOP <span class="tok-num">1</span> Id, Nama, Harga, Stok FROM Produk WHERE Nama = @nama&quot;</span>;
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(query, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@nama&quot;</span>, namaBarang);
+            <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlDataReader</span> reader = cmd.ExecuteReader())
+            {
+                <span <span class="tok-kw">class</span>="tok-kw">if</span> (!reader.Read())
+                {
+                    <span class="tok-type">MessageBox</span>.Show(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Obat tidak ditemukan di apotek!&quot;</span>);
+                    <span <span class="tok-kw">class</span>="tok-kw">return</span>;
+                }
+
+                <span <span class="tok-kw">class</span>="tok-kw">int</span> idProduk = <span class="tok-type">Convert</span>.ToInt32(reader[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Id&quot;</span>]);
+                <span <span class="tok-kw">class</span>="tok-kw">int</span> stokTersedia = <span class="tok-type">Convert</span>.ToInt32(reader[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Stok&quot;</span>]);
+                <span <span class="tok-kw">class</span>="tok-kw">int</span> hargaSatuan = BersihkanHarga(reader[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Harga&quot;</span>].ToString());
+
+                <span <span class="tok-kw">class</span>="tok-comment">// Cek akumulasi jumlah jika obat sudah ada di keranjang</span>
+                <span <span class="tok-kw">class</span>="tok-kw">int</span> qtyDiKeranjang = <span class="tok-num">0</span>;
+                <span <span class="tok-kw">class</span>="tok-kw">foreach</span> (<span class="tok-type">DataRow</span> r <span <span class="tok-kw">class</span>="tok-kw">in</span> dtKeranjang.Rows)
+                    <span <span class="tok-kw">class</span>="tok-kw">if</span> ((<span <span class="tok-kw">class</span>="tok-kw">int</span>)r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;IdProduk&quot;</span>] == idProduk) qtyDiKeranjang += (<span <span class="tok-kw">class</span>="tok-kw">int</span>)r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Jumlah&quot;</span>];
+
+                <span <span class="tok-kw">class</span>="tok-kw">if</span> (qtyDiKeranjang + qty &gt; stokTersedia)
+                {
+                    <span class="tok-type">MessageBox</span>.Show($<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Stok tidak cukup! Sisa stok: {stokTersedia}, sudah di keranjang: {qtyDiKeranjang}&quot;</span>);
+                    <span <span class="tok-kw">class</span>="tok-kw">return</span>;
+                }
+
+                <span <span class="tok-kw">class</span>="tok-comment">// Tambahkan baris baru ke tabel keranjang</span>
+                dtKeranjang.Rows.Add(idProduk, dtKeranjang.Rows.Count + <span class="tok-num">1</span>, namaBarang, hargaSatuan, qty, qty * hargaSatuan);
+                SusunUlangNomor();
+                HitungTotal();
+
+                txtBarang.Clear();
+                txtJumlah.Text = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;<span class="tok-num">1</span>&quot;</span>;
+            }
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">HitungTotal() &amp; HitungKembalian()</span>
+                    <span class="func-type">METHOD</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Menjumlahkan seluruh subtotal di keranjang, lalu menghitung uang kembalian secara otomatis saat kasir mengetik uang tunai yang diserahkan pelanggan.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Kasir_Transaksi.cs &mdash; HitungTotal() &amp; HitungKembalian()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> HitungTotal()
+{
+    grandTotal = <span class="tok-num">0</span>;
+    <span <span class="tok-kw">class</span>="tok-kw">foreach</span> (<span class="tok-type">DataRow</span> row <span <span class="tok-kw">class</span>="tok-kw">in</span> dtKeranjang.Rows)
+        grandTotal += <span class="tok-type">Convert</span>.ToInt32(row[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Subtotal&quot;</span>]);
+
+    lblHargaTotal.Text = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Rp &quot;</span> + grandTotal.ToString(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;N0&quot;</span>, idCulture);
+    HitungKembalian();
+}
+
+<span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> HitungKembalian()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> raw = txtUangYangDibayar.Text.Replace(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;.&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;&quot;</span>).Replace(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Rp&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;&quot;</span>).Trim();
+    <span <span class="tok-kw">class</span>="tok-kw">if</span> (<span <span class="tok-kw">class</span>="tok-kw">int</span>.TryParse(raw, out <span <span class="tok-kw">class</span>="tok-kw">int</span> uangBayar))
+    {
+        <span <span class="tok-kw">class</span>="tok-kw">int</span> kembalian = uangBayar - grandTotal;
+        lblKembalian.ForeColor = kembalian &gt;= <span class="tok-num">0</span> ? <span class="tok-type">Color</span>.Black : <span class="tok-type">Color</span>.Red;
+        lblKembalian.Text = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Rp &quot;</span> + kembalian.ToString(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;N0&quot;</span>, idCulture);
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">btnCetakStruk_Click(...) (Simpan &amp; Cetak)</span>
+                    <span class="func-type">EVENT HANDLER (TOMBOL CETAK TRANSAKSI)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Puncak transaksi: Menggunakan SqlTransaction untuk menyimpan data ke Transaksi, menyimpan tiap item ke DetailTransaksi, memotong stok Produk, menambah poin pelanggan, mencatat log, lalu menampilkan pop-up struk.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Kasir_Transaksi.cs &mdash; btnCetakStruk_Click(...) (Simpan &amp; Cetak)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnCetakStruk_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">if</span> (dtKeranjang.Rows.Count == <span class="tok-num">0</span>) <span <span class="tok-kw">class</span>="tok-kw">return</span>;
+    <span <span class="tok-kw">class</span>="tok-kw">int</span> uangBayar = <span <span class="tok-kw">class</span>="tok-kw">int</span>.Parse(txtUangYangDibayar.Text.Replace(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;.&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;&quot;</span>));
+    <span <span class="tok-kw">class</span>="tok-kw">int</span> kembalian = uangBayar - grandTotal;
+
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlTransaction</span> trans = conn.BeginTransaction())
+        {
+            <span <span class="tok-kw">class</span>="tok-kw">try</span>
+            {
+                <span <span class="tok-kw">class</span>="tok-comment">// <span class="tok-num">1</span>. Simpan Transaksi Utama</span>
+                <span <span class="tok-kw">class</span>="tok-kw">string</span> qTrans = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+                    INSERT INTO Transaksi (IdKasir, IdPelanggan, TotalProduk, Harga_Total, Uang_Bayar, Uang_Kembali, Tanggal_Transaksi)
+                    OUTPUT INSERTED.Id
+                    VALUES (@idKasir, @idPelanggan, @totalQty, @totalHarga, @bayar, @kembali, GETDATE())&quot;</span>;
+
+                <span <span class="tok-kw">class</span>="tok-kw">int</span> idTransaksiBaru;
+                <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmdT = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(qTrans, conn, trans))
+                {
+                    cmdT.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@idKasir&quot;</span>, <span class="tok-type">UserSession</span>.Id);
+                    cmdT.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@idPelanggan&quot;</span>, idPelangganVal);
+                    cmdT.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@totalQty&quot;</span>, totalQty);
+                    cmdT.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@totalHarga&quot;</span>, grandTotal);
+                    cmdT.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@bayar&quot;</span>, uangBayar);
+                    cmdT.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@kembali&quot;</span>, kembalian);
+                    idTransaksiBaru = (<span <span class="tok-kw">class</span>="tok-kw">int</span>)cmdT.ExecuteScalar();
+                }
+
+                <span <span class="tok-kw">class</span>="tok-comment">// <span class="tok-num">2</span>. Simpan DetailTransaksi &amp; Potong Stok Produk</span>
+                <span <span class="tok-kw">class</span>="tok-kw">foreach</span> (<span class="tok-type">DataRow</span> r <span <span class="tok-kw">class</span>="tok-kw">in</span> dtKeranjang.Rows)
+                {
+                    <span <span class="tok-kw">class</span>="tok-kw">int</span> idProduk = (<span <span class="tok-kw">class</span>="tok-kw">int</span>)r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;IdProduk&quot;</span>];
+                    <span <span class="tok-kw">class</span>="tok-kw">int</span> qty = (<span <span class="tok-kw">class</span>="tok-kw">int</span>)r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Jumlah&quot;</span>];
+                    <span <span class="tok-kw">class</span>="tok-kw">int</span> harga = (<span <span class="tok-kw">class</span>="tok-kw">int</span>)r[<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Harga Satuan&quot;</span>];
+
+                    <span <span class="tok-kw">class</span>="tok-kw">string</span> qDetail = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;INSERT INTO DetailTransaksi (IdTransaksi, IdProduk, HargaSatuan, Jumlah) VALUES (@t, @p, @h, @j)&quot;</span>;
+                    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmdD = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(qDetail, conn, trans))
+                    {
+                        cmdD.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@t&quot;</span>, idTransaksiBaru);
+                        cmdD.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@p&quot;</span>, idProduk);
+                        cmdD.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@h&quot;</span>, harga);
+                        cmdD.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@j&quot;</span>, qty);
+                        cmdD.ExecuteNonQuery();
+                    }
+
+                    <span <span class="tok-kw">class</span>="tok-comment">// Potong stok fisik obat</span>
+                    <span <span class="tok-kw">class</span>="tok-kw">string</span> qStok = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;UPDATE Produk SET Stok = Stok - @qty WHERE Id = @p&quot;</span>;
+                    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmdS = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(qStok, conn, trans))
+                    {
+                        cmdS.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@qty&quot;</span>, qty);
+                        cmdS.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@p&quot;</span>, idProduk);
+                        cmdS.ExecuteNonQuery();
+                    }
+                }
+
+                trans.Commit(); <span <span class="tok-kw">class</span>="tok-comment">// Berhasil simpan semua data secara utuh!</span>
+
+                <span <span class="tok-kw">class</span>="tok-comment">// <span class="tok-num">3</span>. Tampilkan Pop-up Struk Kasir</span>
+                <span <span class="tok-kw">class</span>="tok-kw">string</span> struk = BuatTeksStruk(idTransaksiBaru, txtPelanggan.Text, uangBayar, kembalian);
+                <span <span class="tok-kw">class</span>="tok-kw">new</span> Kasir_StrukDialog(struk).ShowDialog();
+
+                dtKeranjang.Clear();
+                grandTotal = <span class="tok-num">0</span>;
+            }
+            <span <span class="tok-kw">class</span>="tok-kw">catch</span> (Exception ex)
+            {
+                trans.Rollback();
+                <span class="tok-type">MessageBox</span>.Show(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Gagal menyimpan transaksi: &quot;</span> + ex.Message);
+            }
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Kasir_FormPelanggan.cs (Pop-up Registrasi) <span style="font-size:12px; font-weight:normal; color:#64748b;">(Kasir_FormPelanggan.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">btnSimpan_Click(object sender, EventArgs e)</span>
+                    <span class="func-type">EVENT HANDLER (SIMPAN PELANGGAN BARU)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Mendaftarkan pelanggan baru jika belum terdaftar di apotek, memvalidasi nama, email, dan nomor HP agar tidak duplikat, lalu otomatis memilih pelanggan tersebut di kasir.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Kasir_FormPelanggan.cs &mdash; btnSimpan_Click(object sender, EventArgs e)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnSimpan_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> nama = txtNama.Text.Trim();
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> email = txtEmail.Text.Trim();
+    <span <span class="tok-kw">class</span>="tok-kw">string</span> noHp = txtNomorHP.Text.Trim();
+
+    <span <span class="tok-kw">class</span>="tok-kw">if</span> (<span <span class="tok-kw">class</span>="tok-kw">string</span>.IsNullOrWhiteSpace(nama) || <span <span class="tok-kw">class</span>="tok-kw">string</span>.IsNullOrWhiteSpace(email) || <span <span class="tok-kw">class</span>="tok-kw">string</span>.IsNullOrWhiteSpace(noHp))
+    {
+        <span class="tok-type">MessageBox</span>.Show(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Nama, Email, dan No HP wajib diisi!&quot;</span>);
+        <span <span class="tok-kw">class</span>="tok-kw">return</span>;
+    }
+
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> sql = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;INSERT INTO Pelanggan (IdKasir, Nama, Email, NomorHP, TotalTransaksi) VALUES (@k, @n, @e, @hp, <span class="tok-num">0</span>)&quot;</span>;
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(sql, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@k&quot;</span>, <span class="tok-type">UserSession</span>.Id);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@n&quot;</span>, nama);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@e&quot;</span>, email);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@hp&quot;</span>, noHp);
+            cmd.ExecuteNonQuery();
+        }
+        <span class="tok-type">Databases</span>.CatatLog($<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Mendaftarkan pelanggan baru: {nama}&quot;</span>);
+    }
+
+    NamaPelangganBaru = nama;
+    <span class="tok-kw">this</span>.<span class="tok-type">DialogResult</span> = <span class="tok-type">DialogResult</span>.OK;
+    <span class="tok-kw">this</span>.Close();
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Kasir_StrukDialog.cs (Pop-up Struk Kasir) <span style="font-size:12px; font-weight:normal; color:#64748b;">(Kasir_StrukDialog.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">AturTengahStruk() &amp; btnCetak_Click(...)</span>
+                    <span class="func-type">METHOD & EVENT</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        AturTengahStruk menghitung indentasi margin kiri dan kanan agar struk belanja tampil persis di tengah jendela. Tombol cetak mengirimkan nota ke printer fisik atau PDF.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Kasir_StrukDialog.cs &mdash; AturTengahStruk() &amp; btnCetak_Click(...)</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> AturTengahStruk()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">Graphics</span> g = rtbStruk.CreateGraphics())
+    {
+        <span class="tok-type">SizeF</span> sz = g.MeasureString(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;==========================================&quot;</span>, rtbStruk.<span class="tok-type">Font</span>);
+        <span <span class="tok-kw">class</span>="tok-kw">int</span> sisaLebar = rtbStruk.ClientSize.Width - (<span <span class="tok-kw">class</span>="tok-kw">int</span>)sz.Width;
+        <span <span class="tok-kw">class</span>="tok-kw">int</span> indent = Math.Max(<span class="tok-num">15</span>, sisaLebar / <span class="tok-num">2</span>);
+
+        rtbStruk.SelectAll();
+        rtbStruk.SelectionIndent = indent;
+        rtbStruk.SelectionRightIndent = indent;
+        rtbStruk.DeselectAll();
+    }
+}
+
+<span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> btnCetak_Click(<span class="tok-kw">object</span> sender, EventArgs e)
+{
+    <span class="tok-type">PrintDocument</span> pd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">PrintDocument</span>();
+    pd.PrintPage += (s, ev) =&gt; {
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">Font</span> font = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">Font</span>(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Courier New&quot;</span>, <span class="tok-num">9</span>))
+        {
+            <span class="tok-type">SizeF</span> sz = ev.<span class="tok-type">Graphics</span>.MeasureString(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;==========================================&quot;</span>, font);
+            float x = Math.Max(<span class="tok-num">10</span>, (ev.PageBounds.Width - sz.Width) / <span class="tok-num">2</span>);
+            ev.<span class="tok-type">Graphics</span>.DrawString(teksStruk, font, <span class="tok-type">Brushes</span>.Black, <span <span class="tok-kw">class</span>="tok-kw">new</span> PointF(x, <span class="tok-num">20</span>));
+        }
+    };
+    <span <span class="tok-kw">class</span>="tok-kw">new</span> PrintDialog { Document = pd }.ShowDialog();
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div></div>
+    <div class="chapter chapter-break" id="chap-4">
+        <div class="chapter-header">
+            <span class="chapter-badge">MODUL OWNER</span>
+            <h2 class="chapter-title">Bab 4: Modul Owner (Laporan Keuangan & Audit Aktivitas)</h2>
+            <p class="chapter-desc">Modul pemilik apotek untuk memantau performa penjualan, melihat laporan transaksi terinci, mengawasi status stok obat, dan memeriksa audit trail aktivitas seluruh pegawai.</p>
+        </div>
+    
+        <div class="page-section">
+            <h3 class="page-title">Owner_Dashboard.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Owner_Dashboard.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">LoadStatistik() &amp; LoadAktivitas()</span>
+                    <span class="func-type">METHOD</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Menampilkan statistik omzet &amp; inventori toko, serta tabel 10 aktivitas terkini pegawai apotek menggunakan LEFT JOIN Users agar log tetap utuh.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Owner_Dashboard.cs &mdash; LoadStatistik() &amp; LoadAktivitas()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> LoadAktivitas()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> sql = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+            SELECT TOP <span class="tok-num">10</span>
+                L.Id AS [ID Log],
+                COALESCE(U.Nama, &#x27;Sistem&#x27;) AS [Pengguna],
+                L.Aktivitas AS [Aktivitas],
+                L.Waktu AS [Waktu]
+            FROM LogAktivitas L
+            LEFT JOIN Users U ON L.IdUser = U.Id
+            ORDER BY L.Waktu DESC&quot;</span>;
+
+        <span class="tok-type">DataTable</span> dt = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">DataTable</span>();
+        <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlDataAdapter</span>(sql, conn).Fill(dt);
+        dgv10AktivitasTerkini.DataSource = dt;
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Owner_Transaksi.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Owner_Transaksi.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">TampilkanTransaksi()</span>
+                    <span class="func-type">METHOD (LAPORAN TRANSAKSI)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Menampilkan riwayat transaksi lengkap dengan menggabungkan nama-nama obat per transaksi menggunakan STRING_AGG SQL Server, serta filter rentang tanggal, pelanggan, dan obat.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Owner_Transaksi.cs &mdash; TampilkanTransaksi()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> TampilkanTransaksi()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> query = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+            SELECT
+                t.Id AS &#x27;ID Transaksi&#x27;,
+                COALESCE(pl.Nama, &#x27;Umum&#x27;) AS &#x27;Pelanggan&#x27;,
+                COALESCE(
+                    (SELECT STRING_AGG(p2.Nama, &#x27;, &#x27;)
+                     FROM DetailTransaksi dt2
+                     INNER JOIN Produk p2 ON dt2.IdProduk = p2.Id
+                     WHERE dt2.IdTransaksi = t.Id), &#x27;-&#x27;
+                ) AS &#x27;Produk&#x27;,
+                t.TotalProduk AS &#x27;Total Item&#x27;,
+                t.Harga_Total AS &#x27;Total Harga&#x27;,
+                t.Uang_Bayar AS &#x27;Uang Bayar&#x27;,
+                t.Uang_Kembali AS &#x27;Uang Kembali&#x27;,
+                t.Tanggal_Transaksi AS &#x27;Tanggal Transaksi&#x27;,
+                u.Nama AS &#x27;Kasir&#x27;
+            FROM Transaksi t
+            LEFT JOIN Pelanggan pl ON t.IdPelanggan = pl.Id
+            LEFT JOIN Users u ON t.IdKasir = u.Id
+            WHERE t.Tanggal_Transaksi &gt;= @tglAwal AND t.Tanggal_Transaksi &lt; @tglAkhir
+            ORDER BY t.Tanggal_Transaksi DESC&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(query, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@tglAwal&quot;</span>, dtpFilterAwal.Value.Date);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@tglAkhir&quot;</span>, dtpFilterAkhir.Value.Date.AddDays(<span class="tok-num">1</span>));
+
+            <span class="tok-type">DataTable</span> dt = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">DataTable</span>();
+            <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlDataAdapter</span>(cmd).Fill(dt);
+            dgvDataProduk.DataSource = dt;
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="page-section">
+            <h3 class="page-title">Owner_LogAktivitas.cs <span style="font-size:12px; font-weight:normal; color:#64748b;">(Owner_LogAktivitas.cs)</span></h3>
+        
+            <div class="func-card">
+                <div class="func-header">
+                    <span class="func-name">LoadDataLog()</span>
+                    <span class="func-type">METHOD (AUDIT TRAIL LOG)</span>
+                </div>
+                <div class="func-body">
+                    <div class="func-summary">
+                        <strong>Buat apa fungsi ini?</strong>
+                        Menampilkan seluruh rekam jejak aktivitas operasional toko dengan filter kategori (Semua, Login/Logout, Transaksi, Kelola Produk, Kelola Akun, Pelanggan) dan rentang tanggal.
+                    </div>
+                    <div class="code-card">
+                        <div class="code-topbar">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                            <span class="code-filename">Owner_LogAktivitas.cs &mdash; LoadDataLog()</span>
+                        </div>
+                        <pre class="code-content"><span <span class="tok-kw">class</span>="tok-kw">private</span> <span <span class="tok-kw">class</span>="tok-kw">void</span> LoadDataLog()
+{
+    <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlConnection</span> conn = <span class="tok-type">Databases</span>.GetConn())
+    {
+        conn.Open();
+        <span <span class="tok-kw">class</span>="tok-kw">string</span> sql = <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">@&quot;
+            SELECT
+                L.Id AS [ID Log],
+                COALESCE(U.Nama, &#x27;Sistem&#x27;) AS [Nama Pegawai],
+                L.Aktivitas AS [Aktivitas],
+                L.Waktu AS [Waktu]
+            FROM LogAktivitas L
+            LEFT JOIN Users U ON U.Id = L.IdUser
+            WHERE
+                (@cari = &#x27;&#x27; OR U.Nama LIKE @keyword OR L.Aktivitas LIKE @keyword)
+                AND (
+                    @kategori = &#x27;Semua Aktivitas&#x27;
+                    OR (@kategori = &#x27;Login &amp; Logout&#x27; AND (L.Aktivitas LIKE &#x27;%Login%&#x27; OR L.Aktivitas LIKE &#x27;%Logout%&#x27;))
+                    OR (@kategori = &#x27;Transaksi&#x27; AND L.Aktivitas LIKE &#x27;%Transaksi%&#x27;)
+                    OR (@kategori = &#x27;Kelola Produk&#x27; AND (L.Aktivitas LIKE &#x27;%obat%&#x27; OR L.Aktivitas LIKE &#x27;%Produk%&#x27;))
+                    OR (@kategori = &#x27;Kelola Akun&#x27; AND (L.Aktivitas LIKE &#x27;%akun%&#x27; OR L.Aktivitas LIKE &#x27;%profil%&#x27;))
+                    OR (@kategori = &#x27;Pelanggan&#x27; AND L.Aktivitas LIKE &#x27;%pelanggan%&#x27;)
+                )
+                AND L.Waktu &gt;= @awal AND L.Waktu &lt; @akhir
+            ORDER BY L.Waktu DESC&quot;</span>;
+
+        <span <span class="tok-kw">class</span>="tok-kw">using</span> (<span class="tok-type">SqlCommand</span> cmd = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlCommand</span>(sql, conn))
+        {
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@cari&quot;</span>, txtCariNama.Text.Trim());
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@keyword&quot;</span>, <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;%&quot;</span> + txtCariNama.Text.Trim() + <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;%&quot;</span>);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@kategori&quot;</span>, cmbCariCategory.SelectedItem?.ToString() ?? <span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;Semua Aktivitas&quot;</span>);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@awal&quot;</span>, dtpFilterAwal.Value.Date);
+            cmd.Parameters.AddWithValue(<span <span class="tok-kw">class</span>="tok-<span <span class="tok-kw">class</span>="tok-kw">string</span>">&quot;@akhir&quot;</span>, dtpFilterAkhir.Value.Date.AddDays(<span class="tok-num">1</span>));
+
+            <span class="tok-type">DataTable</span> dt = <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">DataTable</span>();
+            <span <span class="tok-kw">class</span>="tok-kw">new</span> <span class="tok-type">SqlDataAdapter</span>(cmd).Fill(dt);
+            dgvDataProduk.DataSource = dt;
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+            </div></div>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿namespace Toko_Obat
+namespace Toko_Obat
 {
     partial class Admin_Dashboard
     {
@@ -234,6 +234,7 @@
             btnLogout.TabIndex = 8;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panel2
             // 

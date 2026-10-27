@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -12,6 +12,7 @@ namespace Toko_Obat
         public Admin_Akun()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void Admin_Akun_Load(object sender, EventArgs e)
@@ -171,6 +172,11 @@ namespace Toko_Obat
         {
             new Admin_Profil().Show();
             this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
 
         private void btnAkun_Click_1(object sender, EventArgs e) => MuatDataAkun();

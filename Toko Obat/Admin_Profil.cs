@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -12,6 +12,7 @@ namespace Toko_Obat
         public Admin_Profil()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
         // Saat form dibuka
@@ -177,10 +178,19 @@ namespace Toko_Obat
             MuatDataProfil();
         }
 
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
+        }
+
         // Event kosong bawaan Designer
         private void tlp_content_Paint(object sender, PaintEventArgs e) { }
         private void panel2_Paint(object sender, PaintEventArgs e) { }
-        private void button4_Click(object sender, EventArgs e) { }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            new Admin_Dashboard().Show();
+            this.Close();
+        }
         private void panel2_Paint_1(object sender, PaintEventArgs e) { }
         private void fotoProfil_Click(object sender, EventArgs e) { }
         private void lblRole_Click(object sender, EventArgs e) { }
@@ -189,5 +199,11 @@ namespace Toko_Obat
         private void lblId_Click(object sender, EventArgs e) { }
         private void txtUsername_TextChanged(object sender, EventArgs e) { }
         private void txtPassword_TextChanged(object sender, EventArgs e) { }
+
+        private void btnProduk_Click_1(object sender, EventArgs e)
+        {
+            new Admin_Produk().Show();
+            this.Close();
+        }
     }
 }

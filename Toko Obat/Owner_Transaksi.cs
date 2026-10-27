@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Data;
 using System.Drawing;
@@ -12,6 +12,7 @@ namespace Toko_Obat
         public Owner_Transaksi()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
 
             // Atur filter tanggal default
             dtpFilterAwal.Value = DateTime.Today.AddDays(-30);
@@ -65,11 +66,12 @@ namespace Toko_Obat
                             t.Id AS 'ID Transaksi',
                             COALESCE(pl.Nama, 'Umum') AS 'Pelanggan',
                             COALESCE(
-                                GROUP_CONCAT(
-                                    DISTINCT p.Nama
-                                    ORDER BY p.Nama
-                                    SEPARATOR ', '
-                                ),
+                                (SELECT STRING_AGG(p_sub.Nama, ', ')
+                                 FROM (SELECT DISTINCT p2.Nama
+                                       FROM DetailTransaksi dt2
+                                       INNER JOIN Produk p2
+                                           ON dt2.IdProduk = p2.Id
+                                       WHERE dt2.IdTransaksi = t.Id) p_sub),
                                 '-'
                             ) AS 'Produk',
                             t.TotalProduk AS 'Total Item',
@@ -83,10 +85,6 @@ namespace Toko_Obat
                             ON t.IdPelanggan = pl.Id
                         LEFT JOIN Users u
                             ON t.IdKasir = u.Id
-                        LEFT JOIN DetailTransaksi dt
-                            ON t.Id = dt.IdTransaksi
-                        LEFT JOIN Produk p
-                            ON dt.IdProduk = p.Id
                         WHERE
                             t.Tanggal_Transaksi >= @tanggalAwal
                             AND t.Tanggal_Transaksi < @tanggalAkhir
@@ -106,15 +104,6 @@ namespace Toko_Obat
                                       AND p2.Nama LIKE @cariProduk
                                 )
                             )
-                        GROUP BY
-                            t.Id,
-                            pl.Nama,
-                            t.TotalProduk,
-                            t.Harga_Total,
-                            t.Uang_Bayar,
-                            t.Uang_Kembali,
-                            t.Tanggal_Transaksi,
-                            u.Nama
                         ORDER BY t.Tanggal_Transaksi DESC;
                     ";
 
@@ -160,6 +149,15 @@ namespace Toko_Obat
                         }
 
                         dgvDataProduk.DataSource = dt;
+
+                        if (dgvDataProduk.Columns.Contains("Total Harga"))
+                            dgvDataProduk.Columns["Total Harga"].DefaultCellStyle.Format = "N0";
+
+                        if (dgvDataProduk.Columns.Contains("Uang Bayar"))
+                            dgvDataProduk.Columns["Uang Bayar"].DefaultCellStyle.Format = "N0";
+
+                        if (dgvDataProduk.Columns.Contains("Uang Kembali"))
+                            dgvDataProduk.Columns["Uang Kembali"].DefaultCellStyle.Format = "N0";
 
                         if (dgvDataProduk.Columns.Contains(
                             "Tanggal Transaksi"))
@@ -244,6 +242,11 @@ namespace Toko_Obat
             Owner_Profil profil = new Owner_Profil();
             profil.Show();
             this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
     }
 }

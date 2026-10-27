@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
+using Microsoft.Data.SqlClient;
 
 namespace Toko_Obat
 {
@@ -15,6 +12,59 @@ namespace Toko_Obat
         public Kasir_Profil()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
+            this.Load += Kasir_Profil_Load;
+        }
+
+        private void Kasir_Profil_Load(object sender, EventArgs e)
+        {
+            MuatProfil();
+        }
+
+        private void MuatProfil()
+        {
+            try
+            {
+                using (SqlConnection conn = Databases.GetConn())
+                {
+                    conn.Open();
+
+                    int idKasir = UserSession.Id > 0 ? UserSession.Id : 2;
+                    string sql = "SELECT TOP 1 Id, Nama, Role, FotoProfil FROM Users WHERE Id = @id";
+
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", idKasir);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                lblNama.Text = reader["Nama"].ToString();
+                                lblRole.Text = reader["Role"].ToString();
+                                lblId.Text = "ID: #" + reader["Id"].ToString();
+                                lblUsername.Text = reader["Nama"].ToString();
+                                lblPassword.Text = "••••••••";
+
+                                if (reader["FotoProfil"] != DBNull.Value && reader["FotoProfil"] != null)
+                                {
+                                    byte[] foto = (byte[])reader["FotoProfil"];
+                                    using (MemoryStream ms = new MemoryStream(foto))
+                                    using (Image gambar = Image.FromStream(ms))
+                                    {
+                                        fotoProfil.Image?.Dispose();
+                                        fotoProfil.Image = new Bitmap(gambar);
+                                    }
+                                    fotoProfil.SizeMode = PictureBoxSizeMode.Zoom;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal memuat profil: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnTransaksi_Click(object sender, EventArgs e)
@@ -38,12 +88,18 @@ namespace Toko_Obat
             this.Close();
         }
 
+        private void btnProfil_Click(object sender, EventArgs e) => MuatProfil();
 
-        private void btnProfil_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object sender, EventArgs e)
         {
-            Kasir_Profil profil = new Kasir_Profil();
-            profil.Show();
-            this.Close();
+            UserSession.LakukanLogout(this);
         }
+
+        private void fotoProfil_Click(object sender, EventArgs e) { }
+        private void lblNama_Click(object sender, EventArgs e) { }
+        private void lblRole_Click(object sender, EventArgs e) { }
+        private void lblId_Click(object sender, EventArgs e) { }
+        private void lblUsername_Click(object sender, EventArgs e) { }
+        private void lblPassword_Click(object sender, EventArgs e) { }
     }
 }

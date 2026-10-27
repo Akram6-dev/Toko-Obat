@@ -1,4 +1,4 @@
-﻿namespace Toko_Obat
+namespace Toko_Obat
 {
     partial class Kasir_Produk
     {
@@ -216,6 +216,7 @@
             btnLogout.TabIndex = 8;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panel2
             // 
@@ -279,7 +280,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(505, 22);
+            label6.Location = new Point(415, 22);
             label6.Name = "label6";
             label6.Size = new Size(82, 25);
             label6.TabIndex = 5;
@@ -288,7 +289,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(261, 22);
+            label5.Location = new Point(220, 22);
             label5.Name = "label5";
             label5.Size = new Size(119, 25);
             label5.TabIndex = 4;
@@ -306,25 +307,29 @@
             // cmbCariStok
             // 
             cmbCariStok.FormattingEnabled = true;
-            cmbCariStok.Location = new Point(505, 50);
+            cmbCariStok.Location = new Point(415, 50);
             cmbCariStok.Name = "cmbCariStok";
-            cmbCariStok.Size = new Size(215, 33);
+            cmbCariStok.Size = new Size(175, 33);
             cmbCariStok.TabIndex = 2;
+            cmbCariStok.SelectedIndexChanged += cmbCariStok_SelectedIndexChanged;
             // 
             // cmbCariCategory
             // 
             cmbCariCategory.FormattingEnabled = true;
-            cmbCariCategory.Location = new Point(261, 50);
+            cmbCariCategory.Location = new Point(220, 50);
             cmbCariCategory.Name = "cmbCariCategory";
-            cmbCariCategory.Size = new Size(207, 33);
+            cmbCariCategory.Size = new Size(175, 33);
             cmbCariCategory.TabIndex = 1;
+            cmbCariCategory.SelectedIndexChanged += cmbCariCategory_SelectedIndexChanged;
             // 
             // txtCariNama
             // 
             txtCariNama.Location = new Point(14, 50);
             txtCariNama.Name = "txtCariNama";
-            txtCariNama.Size = new Size(217, 31);
+            txtCariNama.Size = new Size(190, 31);
             txtCariNama.TabIndex = 0;
+            txtCariNama.TextChanged += txtCariNama_TextChanged;
+
             // 
             // dgvDataProduk
             // 
@@ -335,6 +340,7 @@
             dgvDataProduk.RowHeadersWidth = 62;
             dgvDataProduk.Size = new Size(755, 446);
             dgvDataProduk.TabIndex = 4;
+            dgvDataProduk.CellContentClick += dgvDataProduk_CellContentClick;
             // 
             // panel8
             // 

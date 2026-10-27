@@ -247,6 +247,7 @@
             btnLogout.TabIndex = 8;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
             // 
             // panel2
             // 
@@ -316,6 +317,7 @@
             lblWelcome.TabIndex = 0;
             lblWelcome.Text = "SELAMAT DATANG KASIR";
             lblWelcome.TextAlign = ContentAlignment.MiddleCenter;
+            lblWelcome.Click += lblWelcome_Click;
             // 
             // tableLayoutPanel3
             // 
@@ -365,6 +367,7 @@
             lblTotalProduk.Size = new Size(46, 54);
             lblTotalProduk.TabIndex = 3;
             lblTotalProduk.Text = "0";
+            lblTotalProduk.Click += lblTotalProduk_Click;
             // 
             // label8
             // 
@@ -405,6 +408,7 @@
             lblTotalPelanggan.Size = new Size(46, 54);
             lblTotalPelanggan.TabIndex = 3;
             lblTotalPelanggan.Text = "0";
+            lblTotalPelanggan.Click += lblTotalPelanggan_Click;
             // 
             // label6
             // 
@@ -445,6 +449,7 @@
             lblTotalTransaksi.Size = new Size(46, 54);
             lblTotalTransaksi.TabIndex = 1;
             lblTotalTransaksi.Text = "0";
+            lblTotalTransaksi.Click += lblTotalTransaksi_Click;
             // 
             // label4
             // 
@@ -502,6 +507,7 @@
             dgv10TransaksiTerakhir.RowHeadersWidth = 62;
             dgv10TransaksiTerakhir.Size = new Size(750, 216);
             dgv10TransaksiTerakhir.TabIndex = 1;
+            dgv10TransaksiTerakhir.CellContentClick += dgv10TransaksiTerakhir_CellContentClick;
             // 
             // Kasir_Dashboard
             // 

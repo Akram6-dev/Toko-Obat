@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Drawing;
 using System.IO;
@@ -12,6 +12,7 @@ namespace Toko_Obat
         public Owner_Profil()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
             Load += Owner_Profil_Load;
         }
 
@@ -28,55 +29,57 @@ namespace Toko_Obat
                 {
                     conn.Open();
 
+                    int idAktif = UserSession.Id > 0 ? UserSession.Id : 3;
                     string sql = @"
-                        SELECT Id, Nama, Role, FotoProfil
+                        SELECT TOP 1 Id, Nama, Role, FotoProfil
                         FROM Users
-                        WHERE Id = 3 AND Role = 'Owner'
-                        LIMIT 1";
+                        WHERE Id = @id";
 
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (!reader.Read())
+                        cmd.Parameters.AddWithValue("@id", idAktif);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            MessageBox.Show(
-                                "Data Owner tidak ditemukan.",
-                                "Informasi",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information
-                            );
-                            return;
-                        }
-
-                        // Tampilkan data profil
-                        lblNama.Text = reader["Nama"].ToString();
-                        lblRole.Text = reader["Role"].ToString();
-                        lblId.Text = "ID: " + reader["Id"].ToString();
-
-                        // Tampilkan foto profil jika tersedia
-                        if (reader["FotoProfil"] != DBNull.Value)
-                        {
-                            byte[] foto = (byte[])reader["FotoProfil"];
-
-                            using (MemoryStream ms = new MemoryStream(foto))
-                            using (Image gambar = Image.FromStream(ms))
+                            if (!reader.Read())
                             {
-                                fotoProfil.Image?.Dispose();
-                                fotoProfil.Image = new Bitmap(gambar);
+                                MessageBox.Show(
+                                    "Data Owner tidak ditemukan.",
+                                    "Informasi",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information
+                                );
+                                return;
                             }
 
-                            fotoProfil.SizeMode = PictureBoxSizeMode.Zoom;
-                        }
-                        else
-                        {
-                            fotoProfil.Image?.Dispose();
-                            fotoProfil.Image = null;
+                            // Tampilkan data profil
+                            lblNama.Text = reader["Nama"].ToString();
+                            lblRole.Text = reader["Role"].ToString();
+                            lblId.Text = "ID: " + reader["Id"].ToString();
+                            lblUsername.Text = reader["Nama"].ToString();
+
+                            // Tampilkan foto profil jika tersedia
+                            if (reader["FotoProfil"] != DBNull.Value)
+                            {
+                                byte[] foto = (byte[])reader["FotoProfil"];
+
+                                using (MemoryStream ms = new MemoryStream(foto))
+                                using (Image gambar = Image.FromStream(ms))
+                                {
+                                    fotoProfil.Image?.Dispose();
+                                    fotoProfil.Image = new Bitmap(gambar);
+                                }
+
+                                fotoProfil.SizeMode = PictureBoxSizeMode.Zoom;
+                            }
+                            else
+                            {
+                                fotoProfil.Image?.Dispose();
+                                fotoProfil.Image = null;
+                            }
                         }
                     }
                 }
 
-                // Komponen di Designer adalah Label, bukan TextBox
-                lblUsername.Text = "owner";
                 lblPassword.Text = "••••••••";
             }
             catch (Exception ex)
@@ -94,28 +97,33 @@ namespace Toko_Obat
         {
             Owner_Dashboard form = new Owner_Dashboard();
             form.Show();
-            Hide();
+            this.Close();
         }
 
         private void btnTransaksi_Click(object sender, EventArgs e)
         {
             Owner_Transaksi form = new Owner_Transaksi();
             form.Show();
-            Hide();
+            this.Close();
         }
 
         private void btnProduk_Click(object sender, EventArgs e)
         {
             Owner_Produk form = new Owner_Produk();
             form.Show();
-            Hide();
+            this.Close();
         }
 
         private void btnLogAktivitas_Click(object sender, EventArgs e)
         {
             Owner_LogAktivitas form = new Owner_LogAktivitas();
             form.Show();
-            Hide();
+            this.Close();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            UserSession.LakukanLogout(this);
         }
 
         private void button1_Click(object sender, EventArgs e)

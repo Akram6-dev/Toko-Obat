@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient; 
+using Microsoft.Data.SqlClient;
 using System;
 using System.Windows.Forms;
 
@@ -9,13 +9,9 @@ namespace Toko_Obat
         public Halaman_Login()
         {
             InitializeComponent();
-
+            this.WindowState = FormWindowState.Maximized;
             this.DoubleBuffered = true;
-            outerGrid.Resize += (s, ev) => outerGrid.Invalidate();
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
+            this.FormClosed += (s, e) => Application.Exit();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -23,8 +19,7 @@ namespace Toko_Obat
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            if (string.IsNullOrEmpty(username) ||
-                string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 lblError.Text = "Harap isi username dan password.";
                 return;
@@ -36,7 +31,7 @@ namespace Toko_Obat
                 {
                     conn.Open();
 
-                    string query = "SELECT Id, Nama, Role FROM Users WHERE Nama = @nama AND Password = @pass LIMIT 1";
+                    string query = "SELECT TOP 1 Id, Nama, Role FROM Users WHERE Nama = @nama AND Password = @pass";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -51,29 +46,27 @@ namespace Toko_Obat
                                 string namaAkun = reader["Nama"].ToString();
                                 string roleAkun = reader["Role"].ToString();
 
-                                UserSession.SetUser(
-                                    idAkun,
-                                    namaAkun,
-                                    roleAkun
-                                );
+                                UserSession.SetUser(idAkun, namaAkun, roleAkun);
+                                Databases.CatatLog($"Login ke sistem sebagai {roleAkun}");
 
-                                Form dashboard = null;
+                                txtPassword.Clear();
+                                lblError.Text = "";
 
                                 if (roleAkun == "Admin")
                                 {
-                                    dashboard = new Admin_Dashboard();
+                                    Admin_Dashboard dashboard = new Admin_Dashboard();
+                                    dashboard.Show();
+                                    this.Hide();
                                 }
                                 else if (roleAkun == "Kasir")
                                 {
-                                    dashboard = new Kasir_Dashboard();
+                                    Kasir_Dashboard dashboard = new Kasir_Dashboard();
+                                    dashboard.Show();
+                                    this.Hide();
                                 }
                                 else if (roleAkun == "Owner")
                                 {
-                                    dashboard = new Owner_Dashboard();
-                                }
-
-                                if (dashboard != null)
-                                {
+                                    Owner_Dashboard dashboard = new Owner_Dashboard();
                                     dashboard.Show();
                                     this.Hide();
                                 }
@@ -92,17 +85,11 @@ namespace Toko_Obat
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    ex.Message,
-                    "Database Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                MessageBox.Show(ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-        }
+        private void label5_Click(object sender, EventArgs e) { }
+        private void label3_Click(object sender, EventArgs e) { }
     }
 }

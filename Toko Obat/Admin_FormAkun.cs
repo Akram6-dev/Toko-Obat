@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -15,7 +15,7 @@ namespace Toko_Obat
             InitializeComponent();
 
             cmbRole.Items.Clear();
-            cmbRole.Items.AddRange(new object[] { "Admin", "Kasir", "Apoteker" });
+            cmbRole.Items.AddRange(new object[] { "Admin", "Kasir", "Owner" });
             cmbRole.SelectedIndex = 0;
 
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
