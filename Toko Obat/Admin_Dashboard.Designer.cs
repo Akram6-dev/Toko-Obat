@@ -477,9 +477,9 @@ namespace Toko_Obat
             label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.Location = new Point(15, 15);
             label5.Name = "label5";
-            label5.Size = new Size(222, 25);
+            label5.Size = new Size(160, 25);
             label5.TabIndex = 0;
-            label5.Text = "Aktivitas Terakhir Admin";
+            label5.Text = "Daftar 10 Produk";
             // 
             // dgv10AktivitasTerakhir
             // 

@@ -31,25 +31,23 @@ namespace Toko_Obat
                 {
                     conn.Open();
 
-                    // Ambil 10 log terakhir milik user yang login (pakai IdUser, urut dari terbaru)
-                    int idUser = UserSession.Id > 0 ? UserSession.Id : 1;
-                    string queryLog = @"SELECT TOP 10 
-                                            ROW_NUMBER() OVER (ORDER BY Waktu DESC) AS [No],
-                                            Aktivitas, 
-                                            Waktu AS [Tanggal] 
-                                        FROM LogAktivitas 
-                                        WHERE IdUser = @id 
-                                        ORDER BY Waktu DESC";
+                    // Ambil 10 produk teratas/terbaru
+                    string queryProduk = @"SELECT TOP 10 
+                                            ROW_NUMBER() OVER (ORDER BY Id DESC) AS [No],
+                                            Nama AS [Nama Obat], 
+                                            Category AS [Kategori], 
+                                            Stok, 
+                                            Jenis AS [Satuan], 
+                                            Harga 
+                                        FROM Produk 
+                                        ORDER BY Id DESC";
 
-                    using (SqlCommand cmd = new SqlCommand(queryLog, conn))
+                    using (SqlCommand cmd = new SqlCommand(queryProduk, conn))
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        cmd.Parameters.AddWithValue("@id", idUser);
-                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                        {
-                            DataTable dt = new DataTable();
-                            da.Fill(dt);
-                            dgv10AktivitasTerakhir.DataSource = dt;
-                        }
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        dgv10AktivitasTerakhir.DataSource = dt;
                     }
 
                     // Hitung total kartu statistik
@@ -74,6 +72,17 @@ namespace Toko_Obat
             dgv10AktivitasTerakhir.AllowUserToAddRows = false;
             dgv10AktivitasTerakhir.RowHeadersVisible = false;
             dgv10AktivitasTerakhir.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            if (dgv10AktivitasTerakhir.Columns["No"] != null)
+            {
+                dgv10AktivitasTerakhir.Columns["No"].Width = 45;
+                dgv10AktivitasTerakhir.Columns["No"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            }
+            if (dgv10AktivitasTerakhir.Columns["Stok"] != null)
+            {
+                dgv10AktivitasTerakhir.Columns["Stok"].Width = 70;
+                dgv10AktivitasTerakhir.Columns["Stok"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            }
         }
 
         private void btnProduk_Click(object sender, EventArgs e)

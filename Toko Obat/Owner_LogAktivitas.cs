@@ -55,12 +55,14 @@ namespace Toko_Obat
                         SELECT
                             L.Id AS [ID Log],
                             COALESCE(U.Nama, 'Sistem') AS [Nama Pegawai],
+                            COALESCE(U.Role, '-') AS [Role],
                             L.Aktivitas AS [Aktivitas],
                             L.Waktu AS [Waktu]
                         FROM LogAktivitas L
                         LEFT JOIN Users U ON U.Id = L.IdUser
                         WHERE
-                            (@cari = ''
+                            U.Role IN ('Admin', 'Kasir')
+                            AND (@cari = ''
                             OR CAST(L.IdUser AS VARCHAR(20)) LIKE @keyword
                             OR U.Nama LIKE @keyword
                             OR L.Aktivitas LIKE @keyword)

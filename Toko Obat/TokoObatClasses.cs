@@ -17,18 +17,32 @@ namespace Toko_Obat
 
         public static void CatatLog(string pesanAktivitas)
         {
-            using (SqlConnection conn = GetConn())
+            // Hanya mencatat aktivitas untuk Admin dan Kasir (Owner tidak dicatat ke log aktivitas)
+            if (!string.Equals(UserSession.Role, "Admin", StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(UserSession.Role, "Kasir", StringComparison.OrdinalIgnoreCase))
             {
-                conn.Open();
-                int idUser = UserSession.Id > 0 ? UserSession.Id : 1;
+                return;
+            }
 
-                string query = "INSERT INTO LogAktivitas (IdUser, Aktivitas) VALUES (@idUser, @pesan)";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+            try
+            {
+                using (SqlConnection conn = GetConn())
                 {
-                    cmd.Parameters.AddWithValue("@idUser", idUser);
-                    cmd.Parameters.AddWithValue("@pesan", pesanAktivitas);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    int idUser = UserSession.Id > 0 ? UserSession.Id : 1;
+
+                    string query = "INSERT INTO LogAktivitas (IdUser, Aktivitas) VALUES (@idUser, @pesan)";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idUser", idUser);
+                        cmd.Parameters.AddWithValue("@pesan", pesanAktivitas);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch
+            {
+                // Mengabaikan error log agar tidak mengganggu operasional sistem
             }
         }
     }

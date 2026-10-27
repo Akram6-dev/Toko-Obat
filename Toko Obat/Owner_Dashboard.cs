@@ -71,10 +71,12 @@ namespace Toko_Obat
                         SELECT TOP 10
                             L.Id AS [ID Log],
                             COALESCE(U.Nama, 'Sistem') AS [Pengguna],
+                            COALESCE(U.Role, '-') AS [Role],
                             L.Aktivitas AS [Aktivitas],
                             L.Waktu AS [Waktu]
                         FROM LogAktivitas L
                         LEFT JOIN Users U ON L.IdUser = U.Id
+                        WHERE U.Role IN ('Admin', 'Kasir')
                         ORDER BY L.Waktu DESC";
 
                     using (SqlDataAdapter adapter =
